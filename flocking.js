@@ -7,7 +7,8 @@ for (var i = 0; i < NB_BOIDS; i++) {
 	var boid = {
 		x: Math.random() * WIDTH,
 		y: Math.random() * HEIGHT,
-		velocityY: 2
+		velocityX: (Math.random() * 4) - 2,
+		velocityY: (Math.random() * 4) - 2
 	};
 	boids.push(boid);
 }
@@ -45,6 +46,15 @@ function updateBoids() {
 			boid.y += boid.velocityY;
 		}
 		
+		if (boid.x + boid.velocityX <= 1) {
+			boid.x = 1;
+			boid.velocityX = -boid.velocityX;
+		} else if (boid.x + boid.velocityX >= WIDTH - 1) {
+			boid.x = WIDTH - 1;
+			boid.velocityX = -boid.velocityX;
+		} else {
+			boid.x += boid.velocityX;
+		}
 	});
 }
 
