@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+	<head>
+		<style>
+		.flocking-container {
+			border: 1px solid black
+		}
+		</style>
+	</head>
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+		<script>
+			var boids = [];
+			for (var i = 0; i < 100; i++) {
+				var boid = {
+					x: Math.random() * 600,
+					y: Math.random() * 400
+				};
+				boids.push(boid);
+			}
+			
+			d3.select('body')
+				.append('svg')
+				.classed('flocking-container', true)
+				.attr('width', 600)
+				.attr('height', 400)
+				.selectAll('circle')
+				.data(boids)
+				.enter()
+				.append('circle')
+				.attr('cx', function (boid) { return boid.x; })
+				.attr('cy', function (boid) { return boid.y; })
+				.attr('r', 1)
+				.attr('fill', 'black');
+		</script>
+	</body>
+</html>
