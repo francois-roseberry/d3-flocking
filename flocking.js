@@ -18,15 +18,30 @@ var container = d3.select('body')
 container.append('h1')
 	.text('Flocking sample with D3');
 
-container.append('svg')
+var svgContainer = container.append('svg')
 	.classed('flocking-container', true)
 	.attr('width', WIDTH)
-	.attr('height', HEIGHT)
-	.selectAll('circle')
-	.data(boids)
-	.enter()
-	.append('circle')
-	.attr('cx', function (boid) { return boid.x; })
-	.attr('cy', function (boid) { return boid.y; })
-	.attr('r', 1)
-	.attr('fill', 'black');
+	.attr('height', HEIGHT);
+	
+setInterval(updateSample(svgContainer), 100);
+
+function updateSample(svgContainer) {
+	return function () {
+		updateBoids();
+		renderBoids(svgContainer);
+	}
+}
+
+function updateBoids() {}
+
+function renderBoids(svgContainer) {
+console.log('render');
+	svgContainer.selectAll('circle')
+		.data(boids)
+		.enter()
+		.append('circle')
+		.attr('cx', function (boid) { return boid.x; })
+		.attr('cy', function (boid) { return boid.y; })
+		.attr('r', 1)
+		.attr('fill', 'black');
+}
