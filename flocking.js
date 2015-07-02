@@ -11,7 +11,9 @@ for (var i = 0; i < NB_BOIDS; i++) {
 	boids.push(boid);
 }
 
-var container = d3.select('body');
+var container = d3.select('body')
+	.append('div')
+	.classed('sample-container', true);
 
 container.append('h1')
 	.text('Flocking sample with D3');
