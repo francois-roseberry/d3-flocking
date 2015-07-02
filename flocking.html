@@ -6,11 +6,15 @@
 	<body>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
 		<script>
+			var WIDTH = 600;
+			var HEIGHT = 400;
+			var NB_BOIDS = 400;
+			
 			var boids = [];
-			for (var i = 0; i < 100; i++) {
+			for (var i = 0; i < NB_BOIDS; i++) {
 				var boid = {
-					x: Math.random() * 600,
-					y: Math.random() * 400
+					x: Math.random() * WIDTH,
+					y: Math.random() * HEIGHT
 				};
 				boids.push(boid);
 			}
@@ -18,8 +22,8 @@
 			d3.select('body')
 				.append('svg')
 				.classed('flocking-container', true)
-				.attr('width', 600)
-				.attr('height', 400)
+				.attr('width', WIDTH)
+				.attr('height', HEIGHT)
 				.selectAll('circle')
 				.data(boids)
 				.enter()
