@@ -11,8 +11,12 @@ for (var i = 0; i < NB_BOIDS; i++) {
 	boids.push(boid);
 }
 
-d3.select('body')
-	.append('svg')
+var container = d3.select('body');
+
+container.append('h1')
+	.text('Flocking sample with D3');
+
+container.append('svg')
 	.classed('flocking-container', true)
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT)
