@@ -1,6 +1,6 @@
 var WIDTH = 600;
 var HEIGHT = 400;
-var NB_BOIDS = 400;
+var NB_BOIDS = 600;
 
 var boids = [];
 for (var i = 0; i < NB_BOIDS; i++) {
@@ -23,7 +23,7 @@ var svgContainer = container.append('svg')
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
 	
-setInterval(updateSample(svgContainer), 100);
+setInterval(updateSample(svgContainer), 10);
 
 function updateSample(svgContainer) {
 	return function () {
@@ -32,16 +32,25 @@ function updateSample(svgContainer) {
 	}
 }
 
-function updateBoids() {}
+function updateBoids() {
+	_.each(boids, function (boid) {
+		boid.y += 1;
+	});
+}
 
 function renderBoids(svgContainer) {
-console.log('render');
-	svgContainer.selectAll('circle')
-		.data(boids)
+	var boidsUpdate = svgContainer.selectAll('circle')
+		.data(boids);
+		
+	boidsUpdate
 		.enter()
 		.append('circle')
-		.attr('cx', function (boid) { return boid.x; })
-		.attr('cy', function (boid) { return boid.y; })
 		.attr('r', 1)
 		.attr('fill', 'black');
+		
+	boidsUpdate
+		.attr({ 'cx': function (boid) { return boid.x; },
+			    'cy': function (boid) { return boid.y; }
+		});
+		
 }
