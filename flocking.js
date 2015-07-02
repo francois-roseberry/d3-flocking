@@ -6,7 +6,8 @@ var boids = [];
 for (var i = 0; i < NB_BOIDS; i++) {
 	var boid = {
 		x: Math.random() * WIDTH,
-		y: Math.random() * HEIGHT
+		y: Math.random() * HEIGHT,
+		velocityY: 2
 	};
 	boids.push(boid);
 }
@@ -34,7 +35,16 @@ function updateSample(svgContainer) {
 
 function updateBoids() {
 	_.each(boids, function (boid) {
-		boid.y += 1;
+		if (boid.y + boid.velocityY <= 1) { // Will exit by the top
+			boid.y = 1;
+			boid.velocityY = -boid.velocityY;
+		} else if (boid.y + boid.velocityY >= HEIGHT - 1) { // Will exit by the bottom
+			boid.y = HEIGHT - 1;
+			boid.velocityY = -boid.velocityY;
+		} else {
+			boid.y += boid.velocityY;
+		}
+		
 	});
 }
 
