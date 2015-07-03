@@ -68,8 +68,22 @@ function updateBoids() {
 		} else {
 			boid.position.x += boid.velocity.x;
 		}
+		
+		flock(boids);
 	});
 }
+
+function flock(neighboors) {
+	var separation = separate(neighboors);
+	var alignment = align(neighboors);
+	var cohesion = cohere(neighboors);
+}
+
+function separate(neighboors) {}
+
+function align(neighboors) {}
+
+function cohere(neighboors) {}
 
 function renderBoids(svgContainer) {
 	var boidsUpdate = svgContainer.selectAll('circle')
