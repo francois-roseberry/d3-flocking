@@ -4,7 +4,7 @@ var NB_BOIDS = 100;
 var MAX_SPEED = 2;
 var NEIGHBOOR_RADIUS = 35;
 var MAX_FORCE = 4;
-var DESIRED_SEPARATION = 5;
+var DESIRED_SEPARATION = 10;
 var COHESION_WEIGHT = 1;
 var SEPARATION_WEIGHT = 2;
 var ALIGNMENT_WEIGHT = 1;
@@ -23,8 +23,8 @@ var svgContainer = container.append('svg')
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
 
-updateSample(svgContainer)();
-//setInterval(updateSample(svgContainer), 20);
+//updateSample(svgContainer)();
+setInterval(updateSample(svgContainer), 20);
 
 function createBoids() {
 	var boids = [];
@@ -185,33 +185,28 @@ function renderBoids(svgContainer) {
 		.append('line')
 		.classed('separation', true);
 		
-	boidsUpdate.selectAll('circle')
+	boidsUpdate.selectAll('.boid')
 		.attr({
 				'cx': function (boid) { return boid.position.x(); },
 				'cy': function (boid) { return boid.position.y(); }
 		});	
 		
-	boidsUpdate.selectAll('.cohesion')
+	renderVectors(boidsUpdate);
+}
+
+function renderVectors(boidsUpdate) {
+	renderVector(boidsUpdate, 'cohesion');
+	renderVector(boidsUpdate, 'alignment');
+	renderVector(boidsUpdate, 'separation');
+}
+
+function renderVector(boidsUpdate, name) {
+	boidsUpdate
+		.selectAll('.' + name)
 		.attr({
 			'x1': function (boid) { return boid.position.x(); },
 			'y1': function (boid) { return boid.position.y(); },
-			'x2': function (boid) { return boid.position.x() + boid.cohesion.x() * 6; },
-			'y2': function (boid) { return boid.position.y() + boid.cohesion.y() * 6; }
-		});
-		
-	boidsUpdate.selectAll('.alignment')
-		.attr({
-			'x1': function (boid) { return boid.position.x(); },
-			'y1': function (boid) { return boid.position.y(); },
-			'x2': function (boid) { return boid.position.x() + boid.alignment.x() * 6; },
-			'y2': function (boid) { return boid.position.y() + boid.alignment.y() * 6; }
-		});
-		
-	boidsUpdate.selectAll('.separation')
-		.attr({
-			'x1': function (boid) { return boid.position.x(); },
-			'y1': function (boid) { return boid.position.y(); },
-			'x2': function (boid) { return boid.position.x() + boid.separation.x() * 6; },
-			'y2': function (boid) { return boid.position.y() + boid.separation.y() * 6; }
+			'x2': function (boid) { return boid.position.x() + boid[name].x() * 6; },
+			'y2': function (boid) { return boid.position.y() + boid[name].y() * 6; }
 		});
 }
