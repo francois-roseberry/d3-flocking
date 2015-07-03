@@ -171,21 +171,8 @@ function renderBoids(svgContainer) {
 	boidRepresentations
 		.append('circle')
 		.classed('boid', true);
-		
-	boidRepresentations
-		.append('line')
-		.classed('cohesion', true)
-		.attr({'x1': 0, 'y1': 0});
-			
-	boidRepresentations
-		.append('line')
-		.classed('alignment', true)
-		.attr({'x1': 0, 'y1': 0});
-		
-	boidRepresentations
-		.append('line')
-		.classed('separation', true)
-		.attr({'x1': 0, 'y1': 0});
+	
+	createVectors(boidRepresentations);
 		
 	boidsUpdate
 		.attr('transform', function (boid) { return 'translate(' + boid.position.x() + ',' + boid.position.y() + ')'; });
@@ -193,15 +180,26 @@ function renderBoids(svgContainer) {
 	renderVectors(boidsUpdate);
 }
 
-function renderVectors(boidsUpdate) {
-	renderVector(boidsUpdate, 'cohesion');
-	renderVector(boidsUpdate, 'alignment');
-	renderVector(boidsUpdate, 'separation');
+function createVectors(boids) {
+	createVector(boids, 'cohesion');
+	createVector(boids, 'alignment');
+	createVector(boids, 'separation');
 }
 
-function renderVector(boidsUpdate, name) {
-	boidsUpdate
-		.selectAll('.' + name)
+function createVector(boids, name) {
+	boids.append('line')
+		.classed(name, true)
+		.attr({'x1': 0, 'y1': 0});
+}
+
+function renderVectors(boids) {
+	renderVector(boids, 'cohesion');
+	renderVector(boids, 'alignment');
+	renderVector(boids, 'separation');
+}
+
+function renderVector(boids, name) {
+	boids.selectAll('.' + name)
 		.attr({
 			'x2': function (boid) { return boid[name].x() * 6; },
 			'y2': function (boid) { return boid[name].y() * 6; }
