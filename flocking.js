@@ -2,7 +2,7 @@ var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 600;
 var MAX_SPEED = 2;
-var NEIGHBOOR_RADIUS = 10;
+var NEIGHBOOR_RADIUS = 20;
 var MAX_FORCE = 4;
 
 var boids = createBoids();
@@ -49,6 +49,9 @@ function updateSample(svgContainer) {
 
 function updateBoids() {
 	_.each(boids, function (boid) {
+		var acceleration = flock(boid, boids);
+		boid.velocity = boid.velocity.add(acceleration).clamp(MAX_SPEED);
+	
 		if (boid.position.y() + boid.velocity.y() <= 1) { // Will exit by the top
 			boid.position.set_y(1);
 			boid.velocity.set_y(-boid.velocity.y());
@@ -68,20 +71,20 @@ function updateBoids() {
 		} else {
 			boid.position.set_x(boid.position.x() + boid.velocity.x());
 		}
-		
-		flock(boid, boids);
 	});
 }
 
 function flock(boid, neighboors) {
-	var separation = separate(neighboors);
-	var alignment = align(neighboors);
+	boid.separation = separate(neighboors);
+	boid.alignment = align(neighboors);
 	boid.cohesion = cohere(boid, neighboors);
+	
+	return boid.separation.add(boid.alignment).add(boid.cohesion);
 }
 
-function separate(neighboors) {}
+function separate(neighboors) { return vector(0, 0); }
 
-function align(neighboors) {}
+function align(neighboors) { return vector(0, 0); }
 
 function cohere(boid, neighboors) {
 	var sum = vector(0, 0);
