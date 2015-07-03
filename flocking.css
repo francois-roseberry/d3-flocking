@@ -12,12 +12,12 @@
 }
 
 .cohesion {
-	stroke: green;
+	stroke: blue;
 	stroke-width: 1;
 }
 
 .alignment {
-	stroke: blue;
+	stroke: green;
 	stroke-width: 1;
 }
 

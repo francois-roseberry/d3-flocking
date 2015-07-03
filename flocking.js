@@ -4,9 +4,9 @@ var NB_BOIDS = 100;
 var MAX_SPEED = 2;
 var NEIGHBOOR_RADIUS = 30;
 var MAX_FORCE = 4;
-var DESIRED_SEPARATION = 10;
+var DESIRED_SEPARATION = 5;
 var COHESION_WEIGHT = 1;
-var SEPARATION_WEIGHT = 2;
+var SEPARATION_WEIGHT = 4;
 var ALIGNMENT_WEIGHT = 1;
 
 var boids = createBoids();
@@ -174,21 +174,21 @@ function renderBoids(svgContainer) {
 		
 	boidRepresentations
 		.append('line')
-		.classed('cohesion', true);
+		.classed('cohesion', true)
+		.attr({'x1': 0, 'y1': 0});
 			
 	boidRepresentations
 		.append('line')
-		.classed('alignment', true);
+		.classed('alignment', true)
+		.attr({'x1': 0, 'y1': 0});
 		
 	boidRepresentations
 		.append('line')
-		.classed('separation', true);
+		.classed('separation', true)
+		.attr({'x1': 0, 'y1': 0});
 		
-	boidsUpdate.selectAll('.boid')
-		.attr({
-				'cx': function (boid) { return boid.position.x(); },
-				'cy': function (boid) { return boid.position.y(); }
-		});	
+	boidsUpdate
+		.attr('transform', function (boid) { return 'translate(' + boid.position.x() + ',' + boid.position.y() + ')'; });
 		
 	renderVectors(boidsUpdate);
 }
@@ -203,9 +203,7 @@ function renderVector(boidsUpdate, name) {
 	boidsUpdate
 		.selectAll('.' + name)
 		.attr({
-			'x1': function (boid) { return boid.position.x(); },
-			'y1': function (boid) { return boid.position.y(); },
-			'x2': function (boid) { return boid.position.x() + boid[name].x() * 6; },
-			'y2': function (boid) { return boid.position.y() + boid[name].y() * 6; }
+			'x2': function (boid) { return boid[name].x() * 6; },
+			'y2': function (boid) { return boid[name].y() * 6; }
 		});
 }
