@@ -175,10 +175,19 @@ function renderBoids(svgContainer) {
 		
 	boidRepresentations
 		.append('line')
+		.classed('cohesion', true)
 		.attr({
 			'stroke': 'red',
 			'stroke-width': 1
 			});
+			
+	boidRepresentations
+		.append('line')
+		.classed('alignment', true)
+		.attr({
+			'stroke': 'blue',
+			'stroke-width': 1
+		});
 		
 	boidsUpdate.selectAll('circle')
 		.attr({
@@ -186,11 +195,19 @@ function renderBoids(svgContainer) {
 				'cy': function (boid) { return boid.position.y(); }
 		});	
 		
-	boidsUpdate.selectAll('line')
+	boidsUpdate.selectAll('cohesion')
 		.attr({
 			'x1': function (boid) { return boid.position.x(); },
 			'y1': function (boid) { return boid.position.y(); },
 			'x2': function (boid) { return boid.position.x() + boid.cohesion.x() * 6; },
 			'y2': function (boid) { return boid.position.y() + boid.cohesion.y() * 6; }
+		});
+		
+	boidsUpdate.selectAll('alignment')
+		.attr({
+			'x1': function (boid) { return boid.position.x(); },
+			'y1': function (boid) { return boid.position.y(); },
+			'x2': function (boid) { return boid.position.x() + boid.alignment.x() * 6; },
+			'y2': function (boid) { return boid.position.y() + boid.alignment.y() * 6; }
 		});
 }
