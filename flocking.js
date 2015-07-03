@@ -1,17 +1,9 @@
 var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 600;
+var MAX_SPEED = 2;
 
-var boids = [];
-for (var i = 0; i < NB_BOIDS; i++) {
-	var boid = {
-		x: Math.random() * WIDTH,
-		y: Math.random() * HEIGHT,
-		velocityX: (Math.random() * 4) - 2,
-		velocityY: (Math.random() * 4) - 2
-	};
-	boids.push(boid);
-}
+var boids = createBoids();
 
 var container = d3.select('body')
 	.append('div')
@@ -25,7 +17,24 @@ var svgContainer = container.append('svg')
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
 	
-setInterval(updateSample(svgContainer), 10);
+setInterval(updateSample(svgContainer), 20);
+
+function createBoids() {
+	var boids = [];
+	for (var i = 0; i < NB_BOIDS; i++) {
+		boids.push(createBoid());
+	}
+	return boids;
+}
+
+function createBoid() {
+	return {
+		x: Math.random() * WIDTH,
+		y: Math.random() * HEIGHT,
+		velocityX: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED,
+		velocityY: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED
+	};
+}
 
 function updateSample(svgContainer) {
 	return function () {
