@@ -75,7 +75,7 @@ function updateBoids() {
 function flock(boid, neighboors) {
 	var separation = separate(neighboors);
 	var alignment = align(neighboors);
-	var cohesion = cohere(boid, neighboors);
+	boid.cohesion = cohere(boid, neighboors);
 }
 
 function separate(neighboors) {}
@@ -112,18 +112,36 @@ function steer_to(boid, target) {
 }
 
 function renderBoids(svgContainer) {
-	var boidsUpdate = svgContainer.selectAll('circle')
+	var boidsUpdate = svgContainer.selectAll('g')
 		.data(boids);
 		
-	boidsUpdate
+	var boidRepresentations = boidsUpdate
 		.enter()
+		.append('g');
+		
+	boidRepresentations
 		.append('circle')
 		.attr('r', 1)
 		.attr('fill', 'black');
 		
-	boidsUpdate
-		.attr({ 'cx': function (boid) { return boid.position.x(); },
-			    'cy': function (boid) { return boid.position.y(); }
-		});
+	boidRepresentations
+		.append('line')
+		.attr({
+			'stroke': 'red',
+			'stroke-width': 1
+			});
 		
+	boidsUpdate.selectAll('circle')
+		.attr({
+				'cx': function (boid) { return boid.position.x(); },
+				'cy': function (boid) { return boid.position.y(); }
+		});	
+		
+	boidsUpdate.selectAll('line')
+		.attr({
+			'x1': function (boid) { return boid.position.x(); },
+			'y1': function (boid) { return boid.position.y(); },
+			'x2': function (boid) { return boid.position.x() + 3; },
+			'y2': function (boid) { return boid.position.y() + 3; }
+		});
 }
