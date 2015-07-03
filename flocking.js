@@ -52,7 +52,7 @@ function updateBoids() {
 		if (boid.position.y + boid.velocity.y <= 1) { // Will exit by the top
 			boid.position.y = 1;
 			boid.velocity.y = -boid.velocity.y;
-		} else if (boid.y + boid.velocity.y >= HEIGHT - 1) { // Will exit by the bottom
+		} else if (boid.position.y + boid.velocity.y >= HEIGHT - 1) { // Will exit by the bottom
 			boid.position.y = HEIGHT - 1;
 			boid.velocity.y = -boid.velocity.y;
 		} else {
