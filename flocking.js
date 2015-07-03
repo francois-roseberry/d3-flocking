@@ -29,10 +29,14 @@ function createBoids() {
 
 function createBoid() {
 	return {
-		x: Math.random() * WIDTH,
-		y: Math.random() * HEIGHT,
-		velocityX: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED,
-		velocityY: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED
+		position: {
+			x: Math.random() * WIDTH,
+			y: Math.random() * HEIGHT
+		},
+		velocity: {
+			x: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED,
+			y: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED
+		}
 	};
 }
 
@@ -45,24 +49,24 @@ function updateSample(svgContainer) {
 
 function updateBoids() {
 	_.each(boids, function (boid) {
-		if (boid.y + boid.velocityY <= 1) { // Will exit by the top
-			boid.y = 1;
-			boid.velocityY = -boid.velocityY;
-		} else if (boid.y + boid.velocityY >= HEIGHT - 1) { // Will exit by the bottom
-			boid.y = HEIGHT - 1;
-			boid.velocityY = -boid.velocityY;
+		if (boid.position.y + boid.velocity.y <= 1) { // Will exit by the top
+			boid.position.y = 1;
+			boid.velocity.y = -boid.velocity.y;
+		} else if (boid.y + boid.velocity.y >= HEIGHT - 1) { // Will exit by the bottom
+			boid.position.y = HEIGHT - 1;
+			boid.velocity.y = -boid.velocity.y;
 		} else {
-			boid.y += boid.velocityY;
+			boid.position.y += boid.velocity.y;
 		}
 		
-		if (boid.x + boid.velocityX <= 1) {
-			boid.x = 1;
-			boid.velocityX = -boid.velocityX;
-		} else if (boid.x + boid.velocityX >= WIDTH - 1) {
-			boid.x = WIDTH - 1;
-			boid.velocityX = -boid.velocityX;
+		if (boid.position.x + boid.velocity.x <= 1) {
+			boid.position.x = 1;
+			boid.velocity.x = -boid.velocity.x;
+		} else if (boid.position.x + boid.velocity.x >= WIDTH - 1) {
+			boid.position.x = WIDTH - 1;
+			boid.velocity.x = -boid.velocity.x;
 		} else {
-			boid.x += boid.velocityX;
+			boid.position.x += boid.velocity.x;
 		}
 	});
 }
@@ -78,8 +82,8 @@ function renderBoids(svgContainer) {
 		.attr('fill', 'black');
 		
 	boidsUpdate
-		.attr({ 'cx': function (boid) { return boid.x; },
-			    'cy': function (boid) { return boid.y; }
+		.attr({ 'cx': function (boid) { return boid.position.x; },
+			    'cy': function (boid) { return boid.position.y; }
 		});
 		
 }
