@@ -3,5 +3,25 @@
 }
 
 .flocking-container {
-	border: 1px solid black
+	border: 1px solid black;
+}
+
+.boid {
+	r: 1;
+	fill: black;
+}
+
+.cohesion {
+	stroke: green;
+	stroke-width: 1;
+}
+
+.alignment {
+	stroke: blue;
+	stroke-width: 1;
+}
+
+.separation {
+	stroke: red;
+	stroke-width: 1;
 }

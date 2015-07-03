@@ -171,32 +171,19 @@ function renderBoids(svgContainer) {
 		
 	boidRepresentations
 		.append('circle')
-		.attr('r', 1)
-		.attr('fill', 'black');
+		.classed('boid', true);
 		
 	boidRepresentations
 		.append('line')
-		.classed('cohesion', true)
-		.attr({
-			'stroke': 'green',
-			'stroke-width': 1
-			});
+		.classed('cohesion', true);
 			
 	boidRepresentations
 		.append('line')
-		.classed('alignment', true)
-		.attr({
-			'stroke': 'blue',
-			'stroke-width': 1
-		});
+		.classed('alignment', true);
 		
 	boidRepresentations
 		.append('line')
-		.classed('separation', true)
-		.attr({
-			'stroke': 'red',
-			'stroke-width': 1
-		});
+		.classed('separation', true);
 		
 	boidsUpdate.selectAll('circle')
 		.attr({
