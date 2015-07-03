@@ -88,7 +88,7 @@ function flock(boid, neighboors) {
 
 function separate(boid, neighboors) {
 	var mean = vector(0, 0);
-	var count = 0;
+	/*var count = 0;
 	_.each(neighboors, function (neighboor) {
 		var d = neighboor.position.distance(boid.position);
 		if (d > 0 && d < DESIRED_SEPARATION) {
@@ -100,12 +100,28 @@ function separate(boid, neighboors) {
 	
 	if (count > 0) {
 		return mean.divide(count);
-	}
+	}*/
 	
 	return mean;
 }
 
-function align(boid, neighboors) { return vector(0, 0); }
+function align(boid, neighboors) {
+	var mean = vector(0, 0);
+	var count = 0;
+	_.each(neighboors, function (neighboor) {
+		var d = neighboor.position.distance(boid.position);
+		if (d > 0 && d < NEIGHBOOR_RADIUS) {
+			mean = mean.add(neighboor.velocity);
+			count += 1;
+		}
+	});
+	
+	if (count > 0) {
+		return mean.divide(count).clamp(MAX_FORCE);
+	}
+	
+	return mean;
+}
 
 function cohere(boid, neighboors) {
 	var sum = vector(0, 0);
