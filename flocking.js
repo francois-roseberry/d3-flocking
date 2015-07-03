@@ -2,7 +2,8 @@ var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 600;
 var MAX_SPEED = 2;
-var NEIGHBOOR_RADIUS = 5;
+var NEIGHBOOR_RADIUS = 10;
+var MAX_FORCE = 4;
 
 var boids = createBoids();
 
@@ -83,32 +84,40 @@ function separate(neighboors) {}
 function align(neighboors) {}
 
 function cohere(boid, neighboors) {
-	var sum = vector();
+	var sum = vector(0, 0);
 	var count = 0;
 	_.each(neighboors, function (neighboor) {
 		var d = neighboor.position.distance(boid.position);
 		if (d > 0 && d < NEIGHBOOR_RADIUS) {
-			sum = sum.add(boid.position);
+			sum = sum.add(neighboor.position);
+			count += 1;
 		}
 	});
+	
 	if (count > 0) {
-		return steer_to(sum.divide(count));
+		return steer_to(boid, sum.divide(count));
 	}
 	
 	return sum;
 }
 
 function steer_to(boid, target) {
-	var desired = target.substract(boid.location);
+	var desired = target.subtract(boid.position);
 	var d = desired.magnitude();
 	
 	if (d > 0) {
-		var normalized = desired.normalize();
+		desired = desired.normalize();
 		
-		return normalized.subtract(boid.velocity);
+		if (d < 100.0) {
+			desired = desired.multiply(MAX_SPEED * (d/100.0));
+		} else {
+			desired = desired.multiply(MAX_SPEED);
+		}
+		
+		return desired.subtract(boid.velocity).clamp(MAX_FORCE);
 	}
 	
-	return vector();
+	return vector(0, 0);
 }
 
 function renderBoids(svgContainer) {
@@ -141,7 +150,7 @@ function renderBoids(svgContainer) {
 		.attr({
 			'x1': function (boid) { return boid.position.x(); },
 			'y1': function (boid) { return boid.position.y(); },
-			'x2': function (boid) { return boid.position.x() + 3; },
-			'y2': function (boid) { return boid.position.y() + 3; }
+			'x2': function (boid) { return boid.position.x() + boid.cohesion.x() * 6; },
+			'y2': function (boid) { return boid.position.y() + boid.cohesion.y() * 6; }
 		});
 }
