@@ -1,9 +1,13 @@
 var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 600;
-var MAX_SPEED = 2;
-var NEIGHBOOR_RADIUS = 20;
+var MAX_SPEED = 4;
+var NEIGHBOOR_RADIUS = 35;
 var MAX_FORCE = 4;
+var DESIRED_SEPARATION = 5;
+var COHESION_WEIGHT = 1;
+var SEPARATION_WEIGHT = 2;
+var ALIGNMENT_WEIGHT = 1;
 
 var boids = createBoids();
 
@@ -75,16 +79,33 @@ function updateBoids() {
 }
 
 function flock(boid, neighboors) {
-	boid.separation = separate(neighboors);
-	boid.alignment = align(neighboors);
-	boid.cohesion = cohere(boid, neighboors);
+	boid.separation = separate(boid, neighboors).multiply(SEPARATION_WEIGHT);
+	boid.alignment = align(boid, neighboors).multiply(ALIGNMENT_WEIGHT);
+	boid.cohesion = cohere(boid, neighboors).multiply(COHESION_WEIGHT);
 	
 	return boid.separation.add(boid.alignment).add(boid.cohesion);
 }
 
-function separate(neighboors) { return vector(0, 0); }
+function separate(boid, neighboors) {
+	var mean = vector(0, 0);
+	var count = 0;
+	_.each(neighboors, function (neighboor) {
+		var d = neighboor.position.distance(boid.position);
+		if (d > 0 && d < DESIRED_SEPARATION) {
+			var localMean = boid.position.subtract(neighboor.position).normalize().divide(d);
+			mean.add(localMean);
+			count += 1;
+		}
+	});
+	
+	if (count > 0) {
+		return mean.divide(count);
+	}
+	
+	return mean;
+}
 
-function align(neighboors) { return vector(0, 0); }
+function align(boid, neighboors) { return vector(0, 0); }
 
 function cohere(boid, neighboors) {
 	var sum = vector(0, 0);
@@ -112,7 +133,7 @@ function steer_to(boid, target) {
 		desired = desired.normalize();
 		
 		if (d < 100.0) {
-			desired = desired.multiply(MAX_SPEED * (d/100.0));
+			desired = desired.multiply(MAX_SPEED * (d / 100.0));
 		} else {
 			desired = desired.multiply(MAX_SPEED);
 		}
