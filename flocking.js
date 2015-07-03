@@ -48,24 +48,24 @@ function updateSample(svgContainer) {
 
 function updateBoids() {
 	_.each(boids, function (boid) {
-		if (boid.position.y + boid.velocity.y <= 1) { // Will exit by the top
-			boid.position.y = 1;
-			boid.velocity.y = -boid.velocity.y;
-		} else if (boid.position.y + boid.velocity.y >= HEIGHT - 1) { // Will exit by the bottom
-			boid.position.y = HEIGHT - 1;
-			boid.velocity.y = -boid.velocity.y;
+		if (boid.position.y() + boid.velocity.y() <= 1) { // Will exit by the top
+			boid.position.set_y(1);
+			boid.velocity.set_y(-boid.velocity.y());
+		} else if (boid.position.y() + boid.velocity.y() >= HEIGHT - 1) { // Will exit by the bottom
+			boid.position.set_y(HEIGHT - 1);
+			boid.velocity.set_y(-boid.velocity.y());
 		} else {
-			boid.position.y += boid.velocity.y;
+			boid.position.set_y(boid.position.y() + boid.velocity.y());
 		}
 		
-		if (boid.position.x + boid.velocity.x <= 1) {
-			boid.position.x = 1;
-			boid.velocity.x = -boid.velocity.x;
-		} else if (boid.position.x + boid.velocity.x >= WIDTH - 1) {
-			boid.position.x = WIDTH - 1;
-			boid.velocity.x = -boid.velocity.x;
+		if (boid.position.x() + boid.velocity.x() <= 1) {
+			boid.position.set_x(1);
+			boid.velocity.set_x(-boid.velocity.x());
+		} else if (boid.position.x() + boid.velocity.x() >= WIDTH - 1) {
+			boid.position.set_x(WIDTH - 1);
+			boid.velocity.set_x(-boid.velocity.x());
 		} else {
-			boid.position.x += boid.velocity.x;
+			boid.position.set_x(boid.position.x() + boid.velocity.x());
 		}
 		
 		flock(boid, boids);
@@ -86,26 +86,26 @@ function cohere(boid, neighboors) {
 	var sum = vector();
 	var count = 0;
 	_.each(neighboors, function (neighboor) {
-		var d = distance(neighboor.position, boid.position);
+		var d = neighboor.position.distance(boid.position);
 		if (d > 0 && d < NEIGHBOOR_RADIUS) {
-			sum = add(sum, boid.position);
+			sum = sum.add(boid.position);
 		}
 	});
 	if (count > 0) {
-		return steer_to(divide(sum, count));
+		return steer_to(sum.divide(count));
 	}
 	
 	return sum;
 }
 
 function steer_to(boid, target) {
-	var desired = substract(target, boid.location);
-	var d = magnitude(desired);
+	var desired = target.substract(boid.location);
+	var d = desired.magnitude();
 	
 	if (d > 0) {
-		var normalized = normalize(d);
+		var normalized = desired.normalize();
 		
-		return subtract(normalized, boid.velocity);
+		return normalized.subtract(boid.velocity);
 	}
 	
 	return vector();
@@ -122,8 +122,8 @@ function renderBoids(svgContainer) {
 		.attr('fill', 'black');
 		
 	boidsUpdate
-		.attr({ 'cx': function (boid) { return boid.position.x; },
-			    'cy': function (boid) { return boid.position.y; }
+		.attr({ 'cx': function (boid) { return boid.position.x(); },
+			    'cy': function (boid) { return boid.position.y(); }
 		});
 		
 }
