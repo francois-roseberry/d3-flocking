@@ -22,8 +22,9 @@ var svgContainer = container.append('svg')
 	.classed('flocking-container', true)
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
-	
-setInterval(updateSample(svgContainer), 20);
+
+updateSample(svgContainer)();
+//setInterval(updateSample(svgContainer), 20);
 
 function createBoids() {
 	var boids = [];
@@ -177,7 +178,7 @@ function renderBoids(svgContainer) {
 		.append('line')
 		.classed('cohesion', true)
 		.attr({
-			'stroke': 'red',
+			'stroke': 'green',
 			'stroke-width': 1
 			});
 			
@@ -189,13 +190,21 @@ function renderBoids(svgContainer) {
 			'stroke-width': 1
 		});
 		
+	boidRepresentations
+		.append('line')
+		.classed('separation', true)
+		.attr({
+			'stroke': 'red',
+			'stroke-width': 1
+		});
+		
 	boidsUpdate.selectAll('circle')
 		.attr({
 				'cx': function (boid) { return boid.position.x(); },
 				'cy': function (boid) { return boid.position.y(); }
 		});	
 		
-	boidsUpdate.selectAll('cohesion')
+	boidsUpdate.selectAll('.cohesion')
 		.attr({
 			'x1': function (boid) { return boid.position.x(); },
 			'y1': function (boid) { return boid.position.y(); },
@@ -203,11 +212,19 @@ function renderBoids(svgContainer) {
 			'y2': function (boid) { return boid.position.y() + boid.cohesion.y() * 6; }
 		});
 		
-	boidsUpdate.selectAll('alignment')
+	boidsUpdate.selectAll('.alignment')
 		.attr({
 			'x1': function (boid) { return boid.position.x(); },
 			'y1': function (boid) { return boid.position.y(); },
 			'x2': function (boid) { return boid.position.x() + boid.alignment.x() * 6; },
 			'y2': function (boid) { return boid.position.y() + boid.alignment.y() * 6; }
+		});
+		
+	boidsUpdate.selectAll('.separation')
+		.attr({
+			'x1': function (boid) { return boid.position.x(); },
+			'y1': function (boid) { return boid.position.y(); },
+			'x2': function (boid) { return boid.position.x() + boid.separation.x() * 6; },
+			'y2': function (boid) { return boid.position.y() + boid.separation.y() * 6; }
 		});
 }
