@@ -2,7 +2,7 @@ var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 100;
 var MAX_SPEED = 2;
-var NEIGHBOOR_RADIUS = 35;
+var NEIGHBOOR_RADIUS = 30;
 var MAX_FORCE = 4;
 var DESIRED_SEPARATION = 10;
 var COHESION_WEIGHT = 1;
@@ -23,7 +23,6 @@ var svgContainer = container.append('svg')
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
 
-//updateSample(svgContainer)();
 setInterval(updateSample(svgContainer), 20);
 
 function createBoids() {
@@ -94,7 +93,7 @@ function separate(boid, neighboors) {
 		var d = neighboor.position.distance(boid.position);
 		if (d > 0 && d < DESIRED_SEPARATION) {
 			var localMean = boid.position.subtract(neighboor.position).normalize().divide(d);
-			mean.add(localMean);
+			mean = mean.add(localMean);
 			count += 1;
 		}
 	});
