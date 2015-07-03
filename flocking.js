@@ -1,7 +1,7 @@
 var WIDTH = 600;
 var HEIGHT = 400;
-var NB_BOIDS = 600;
-var MAX_SPEED = 4;
+var NB_BOIDS = 100;
+var MAX_SPEED = 2;
 var NEIGHBOOR_RADIUS = 35;
 var MAX_FORCE = 4;
 var DESIRED_SEPARATION = 5;
@@ -88,7 +88,7 @@ function flock(boid, neighboors) {
 
 function separate(boid, neighboors) {
 	var mean = vector(0, 0);
-	/*var count = 0;
+	var count = 0;
 	_.each(neighboors, function (neighboor) {
 		var d = neighboor.position.distance(boid.position);
 		if (d > 0 && d < DESIRED_SEPARATION) {
@@ -100,7 +100,7 @@ function separate(boid, neighboors) {
 	
 	if (count > 0) {
 		return mean.divide(count);
-	}*/
+	}
 	
 	return mean;
 }
