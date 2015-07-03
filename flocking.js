@@ -2,6 +2,7 @@ var WIDTH = 600;
 var HEIGHT = 400;
 var NB_BOIDS = 600;
 var MAX_SPEED = 2;
+var NEIGHBOOR_RADIUS = 5;
 
 var boids = createBoids();
 
@@ -29,15 +30,31 @@ function createBoids() {
 
 function createBoid() {
 	return {
-		position: {
-			x: Math.random() * WIDTH,
-			y: Math.random() * HEIGHT
-		},
-		velocity: {
-			x: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED,
-			y: (Math.random() * 2 * MAX_SPEED) - MAX_SPEED
-		}
+		position: vector(
+			Math.random() * WIDTH,
+			Math.random() * HEIGHT),
+		velocity: vector(
+			(Math.random() * 2 * MAX_SPEED) - MAX_SPEED,
+			(Math.random() * 2 * MAX_SPEED) - MAX_SPEED)
 	};
+}
+
+function vector() {
+	return { x: 0, y: 0 };
+}
+
+function vector(x, y) {
+	return { x: x, y: y};
+}
+
+function distance(v1, v2) {
+	var dx = Math.abs(v1.x - v2.x);
+	var dy = Math.abs(v1.y - v2.y);
+	return Math.sqrt(dx*dx + dy*dy);
+}
+
+function add(v1, v2) {
+	return vector(v1.x+v2.x, v1.y+v2.y);
 }
 
 function updateSample(svgContainer) {
@@ -69,21 +86,29 @@ function updateBoids() {
 			boid.position.x += boid.velocity.x;
 		}
 		
-		flock(boids);
+		flock(boid, boids);
 	});
 }
 
-function flock(neighboors) {
+function flock(boid, neighboors) {
 	var separation = separate(neighboors);
 	var alignment = align(neighboors);
-	var cohesion = cohere(neighboors);
+	var cohesion = cohere(boid, neighboors);
 }
 
 function separate(neighboors) {}
 
 function align(neighboors) {}
 
-function cohere(neighboors) {}
+function cohere(boid, neighboors) {
+	var sum = vector();
+	_.each(neighboors, function (neighboor) {
+		var d = distance(neighboor.position, boid.position);
+		if (d > 0 && d < NEIGHBOOR_RADIUS) {
+			sum = add(sum, boid.position);
+		}
+	});
+}
 
 function renderBoids(svgContainer) {
 	var boidsUpdate = svgContainer.selectAll('circle')
