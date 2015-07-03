@@ -84,12 +84,31 @@ function align(neighboors) {}
 
 function cohere(boid, neighboors) {
 	var sum = vector();
+	var count = 0;
 	_.each(neighboors, function (neighboor) {
 		var d = distance(neighboor.position, boid.position);
 		if (d > 0 && d < NEIGHBOOR_RADIUS) {
 			sum = add(sum, boid.position);
 		}
 	});
+	if (count > 0) {
+		return steer_to(divide(sum, count));
+	}
+	
+	return sum;
+}
+
+function steer_to(boid, target) {
+	var desired = substract(target, boid.location);
+	var d = magnitude(desired);
+	
+	if (d > 0) {
+		var normalized = normalize(d);
+		
+		return subtract(normalized, boid.velocity);
+	}
+	
+	return vector();
 }
 
 function renderBoids(svgContainer) {
