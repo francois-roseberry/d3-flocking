@@ -7,16 +7,32 @@ function renderControls(container, weights) {
 		
 	weightsBox.append('span').text('Weights');
 		
-	var controls = weightsBox.selectAll('div')
-		.data([{ name: 'Cohesion'}, { name: 'Alignment' }, { name: 'Separation' }])
+	var controls = weightsBox.append('table')
+		.attr({
+			'align': 'center',
+			'cellspacing': 20
+		})
+		.selectAll('tr')
+		.data([
+			{ name: 'Cohesion', value: weights.cohesion },
+			{ name: 'Alignment', value: weights.alignment },
+			{ name: 'Separation', value: weights.separation }
+		])
 		.enter()
-		.append('div');
+		.append('tr');
 		
 	controls
-		.append('span')
+		.append('td')
+		.attr('align', 'left')
 		.text(function (param) { return param.name; });
 		
 	controls
+		.append('td')
+		.attr('width', 300)
 		.append('div')
-		.each(function (param) { $(this).slider(); });
+		.each(function (param) {
+			$(this).slider({
+				min: 1, max: 10, step: 0.5, value: param.value
+			});
+		});
 }
