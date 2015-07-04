@@ -24,7 +24,7 @@ var svgContainer = container.append('svg')
 	.attr('height', HEIGHT);
 	
 var controlsContainer = container.append('div');
-renderControls(controlsContainer);
+renderControls(controlsContainer, {cohesion: COHESION_WEIGHT, alignment: ALIGNMENT_WEIGHT, separation: SEPARATION_WEIGHT});
 
 setInterval(updateSample(svgContainer), 20);
 
