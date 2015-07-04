@@ -19,9 +19,13 @@ container.append('h1')
 	.text('Flocking sample with D3');
 
 var svgContainer = container.append('svg')
-	.classed('flocking-container', true)
+	.classed('box', true)
 	.attr('width', WIDTH)
 	.attr('height', HEIGHT);
+	
+var controlsContainer = container.append('div');
+
+controls(controlsContainer);
 
 setInterval(updateSample(svgContainer), 20);
 
