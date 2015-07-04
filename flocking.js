@@ -24,8 +24,7 @@ var svgContainer = container.append('svg')
 	.attr('height', HEIGHT);
 	
 var controlsContainer = container.append('div');
-
-controls(controlsContainer);
+renderControls(controlsContainer);
 
 setInterval(updateSample(svgContainer), 20);
 
