@@ -9,24 +9,28 @@ var COHESION_WEIGHT = 1;
 var SEPARATION_WEIGHT = 4;
 var ALIGNMENT_WEIGHT = 1;
 
-var boids = createBoids();
+$(document).ready(startSample);
 
-var container = d3.select('body')
-	.append('div')
-	.classed('sample-container', true);
+function startSample() {
+	var boids = createBoids();
 
-container.append('h1')
-	.text('Flocking sample with D3');
+	var container = d3.select('body')
+		.append('div')
+		.classed('sample-container', true);
 
-var svgContainer = container.append('svg')
-	.classed('box', true)
-	.attr('width', WIDTH)
-	.attr('height', HEIGHT);
-	
-var controlsContainer = container.append('div');
-renderControls(controlsContainer, {cohesion: COHESION_WEIGHT, alignment: ALIGNMENT_WEIGHT, separation: SEPARATION_WEIGHT});
+	container.append('h1')
+		.text('Flocking sample with D3');
 
-setInterval(updateSample(svgContainer), 20);
+	var svgContainer = container.append('svg')
+		.classed('box', true)
+		.attr('width', WIDTH)
+		.attr('height', HEIGHT);
+		
+	var controlsContainer = container.append('div');
+	renderControls(controlsContainer, {cohesion: COHESION_WEIGHT, alignment: ALIGNMENT_WEIGHT, separation: SEPARATION_WEIGHT});
+
+	Rx.Observable.timer(0, 20).subscribe(updateSample(svgContainer, boids));
+}
 
 function createBoids() {
 	var boids = [];
@@ -47,14 +51,14 @@ function createBoid() {
 	};
 }
 
-function updateSample(svgContainer) {
+function updateSample(svgContainer, boids) {
 	return function () {
-		updateBoids();
-		renderBoids(svgContainer);
+		updateBoids(boids);
+		renderBoids(svgContainer, boids);
 	}
 }
 
-function updateBoids() {
+function updateBoids(boids) {
 	_.each(boids, function (boid) {
 		var acceleration = flock(boid, boids);
 		boid.velocity = boid.velocity.add(acceleration).clamp(MAX_SPEED);
@@ -163,7 +167,7 @@ function steer_to(boid, target) {
 	return vector(0, 0);
 }
 
-function renderBoids(svgContainer) {
+function renderBoids(svgContainer, boids) {
 	var boidsUpdate = svgContainer.selectAll('g')
 		.data(boids);
 		
