@@ -15,7 +15,13 @@ var PARAMS = {
 	}
 };
 
+var stopped = false;
+
 $(document).ready(startSample(PARAMS));
+
+$(window).unload(function () {
+	stopped = true;
+})
 
 function startSample(params) {
 	var boids = createBoids(params);
@@ -35,7 +41,9 @@ function startSample(params) {
 	var controlsContainer = container.append('div');
 	var controls = renderControls(controlsContainer, params);
 
-	Rx.Observable.timer(0, 20).withLatestFrom(controls.params(), function (time, params) { return params; })
+	Rx.Observable.timer(0, 20)
+		.filter(function () { return !stopped; })
+		.withLatestFrom(controls.params(), function (time, params) { return params; })
 		.subscribe(updateSample(svgContainer, boids));
 }
 
