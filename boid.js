@@ -40,7 +40,7 @@ function boid(position, velocity) {
 	}
 	
 	function separate (self, neighboors, params) {
-		var mean = vector(0, 0);
+		var mean = new Vector(0, 0);
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -59,7 +59,7 @@ function boid(position, velocity) {
 	}
 	
 	function align (self, neighboors, params) {
-		var mean = vector(0, 0);
+		var mean = new Vector(0, 0);
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -77,7 +77,7 @@ function boid(position, velocity) {
 	}
 	
 	function cohere (self, neighboors, params) {
-		var sum = vector(0, 0);
+		var sum = new Vector(0, 0);
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -110,6 +110,6 @@ function boid(position, velocity) {
 			return desired.subtract(self._velocity).clamp(params.maxForce);
 		}
 		
-		return vector(0, 0);
+		return new Vector(0, 0);
 	}
 }

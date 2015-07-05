@@ -49,10 +49,10 @@ function createBoids(params) {
 
 function createBoid(params) {
 	return boid(
-		vector(
+		new Vector(
 			Math.random() * SIZE.width,
 			Math.random() * SIZE.height),
-		vector(
+		new Vector(
 			(Math.random() * 2 * params.maxSpeed) - params.maxSpeed,
 			(Math.random() * 2 * params.maxSpeed) - params.maxSpeed)
 	);
