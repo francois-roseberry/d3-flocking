@@ -33,9 +33,9 @@ function startSample(params) {
 		.attr('height', SIZE.height);
 		
 	var controlsContainer = container.append('div');
-	renderControls(controlsContainer, params);
+	var controls = renderControls(controlsContainer, params);
 
-	Rx.Observable.timer(0, 20)
+	Rx.Observable.timer(0, 20).withLatestFrom(controls.params(), function (time, params) { return params; })
 		.subscribe(updateSample(svgContainer, boids));
 }
 
@@ -59,8 +59,8 @@ function createBoid(params) {
 }
 
 function updateSample(svgContainer, boids) {
-	return function () {
-		updateBoids(boids, PARAMS);
+	return function (params) {
+		updateBoids(boids, params);
 		updateRendering(svgContainer, boids);
 	}
 }

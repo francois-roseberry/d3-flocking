@@ -1,4 +1,5 @@
 function renderControls(container, params) {
+	_params = new Rx.BehaviorSubject(params);
 	container.append('h3')
 		.text('Controls');
 	
@@ -35,4 +36,10 @@ function renderControls(container, params) {
 				min: 1, max: 10, step: 0.5, value: param.value
 			});
 		});
+		
+	return {
+		params: function () {
+			return _params.asObservable();
+		}
+	};
 }
