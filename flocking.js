@@ -48,14 +48,14 @@ function createBoids(params) {
 }
 
 function createBoid(params) {
-	return {
-		position: vector(
+	return boid(
+		vector(
 			Math.random() * SIZE.width,
 			Math.random() * SIZE.height),
-		velocity: vector(
+		vector(
 			(Math.random() * 2 * params.maxSpeed) - params.maxSpeed,
 			(Math.random() * 2 * params.maxSpeed) - params.maxSpeed)
-	};
+	);
 }
 
 function updateSample(svgContainer, boids) {
@@ -67,111 +67,8 @@ function updateSample(svgContainer, boids) {
 
 function updateBoids(boids, params) {
 	_.each(boids, function (boid) {
-		var acceleration = flock(boid, boids, params);
-		boid.velocity = boid.velocity.add(acceleration).clamp(params.maxSpeed);
-	
-		if (boid.position.y() + boid.velocity.y() <= 1) { // Will exit by the top
-			boid.position.set_y(1);
-			boid.velocity.set_y(-boid.velocity.y());
-		} else if (boid.position.y() + boid.velocity.y() >= SIZE.height - 1) { // Will exit by the bottom
-			boid.position.set_y(SIZE.height - 1);
-			boid.velocity.set_y(-boid.velocity.y());
-		} else {
-			boid.position.set_y(boid.position.y() + boid.velocity.y());
-		}
-		
-		if (boid.position.x() + boid.velocity.x() <= 1) {
-			boid.position.set_x(1);
-			boid.velocity.set_x(-boid.velocity.x());
-		} else if (boid.position.x() + boid.velocity.x() >= SIZE.width - 1) {
-			boid.position.set_x(SIZE.width - 1);
-			boid.velocity.set_x(-boid.velocity.x());
-		} else {
-			boid.position.set_x(boid.position.x() + boid.velocity.x());
-		}
+		boid.update(boids, params);
 	});
-}
-
-function flock(boid, neighboors, params) {
-	boid.separation = separate(boid, neighboors, params).multiply(params.weights.separation);
-	boid.alignment = align(boid, neighboors, params).multiply(params.weights.alignment);
-	boid.cohesion = cohere(boid, neighboors, params).multiply(params.weights.cohesion);
-	
-	return boid.separation.add(boid.alignment).add(boid.cohesion);
-}
-
-function separate(boid, neighboors, params) {
-	var mean = vector(0, 0);
-	var count = 0;
-	_.each(neighboors, function (neighboor) {
-		var d = neighboor.position.distance(boid.position);
-		if (d > 0 && d < params.desiredSeparation) {
-			var localMean = boid.position.subtract(neighboor.position).normalize().divide(d);
-			mean = mean.add(localMean);
-			count += 1;
-		}
-	});
-	
-	if (count > 0) {
-		return mean.divide(count);
-	}
-	
-	return mean;
-}
-
-function align(boid, neighboors, params) {
-	var mean = vector(0, 0);
-	var count = 0;
-	_.each(neighboors, function (neighboor) {
-		var d = neighboor.position.distance(boid.position);
-		if (d > 0 && d < params.neighboorRadius) {
-			mean = mean.add(neighboor.velocity);
-			count += 1;
-		}
-	});
-	
-	if (count > 0) {
-		return mean.divide(count).clamp(params.maxForce);
-	}
-	
-	return mean;
-}
-
-function cohere(boid, neighboors, params) {
-	var sum = vector(0, 0);
-	var count = 0;
-	_.each(neighboors, function (neighboor) {
-		var d = neighboor.position.distance(boid.position);
-		if (d > 0 && d < params.neighboorRadius) {
-			sum = sum.add(neighboor.position);
-			count += 1;
-		}
-	});
-	
-	if (count > 0) {
-		return steer_to(boid, sum.divide(count), params);
-	}
-	
-	return sum;
-}
-
-function steer_to(boid, target, params) {
-	var desired = target.subtract(boid.position);
-	var d = desired.magnitude();
-	
-	if (d > 0) {
-		desired = desired.normalize();
-		
-		if (d < 100.0) {
-			desired = desired.multiply(params.maxSpeed * (d / 100.0));
-		} else {
-			desired = desired.multiply(params.maxSpeed);
-		}
-		
-		return desired.subtract(boid.velocity).clamp(params.maxForce);
-	}
-	
-	return vector(0, 0);
 }
 
 function updateRendering(svgContainer, boids) {
@@ -189,7 +86,7 @@ function updateRendering(svgContainer, boids) {
 	createVectors(boidRepresentations);
 		
 	boidsUpdate
-		.attr('transform', function (boid) { return 'translate(' + boid.position.x() + ',' + boid.position.y() + ')'; });
+		.attr('transform', function (boid) { return 'translate(' + boid.x() + ',' + boid.y() + ')'; });
 		
 	renderVectors(boidsUpdate);
 }
