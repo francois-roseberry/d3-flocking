@@ -1,4 +1,4 @@
-function renderControls(container, weights) {
+function renderControls(container, params) {
 	container.append('h3')
 		.text('Controls');
 	
@@ -14,9 +14,9 @@ function renderControls(container, weights) {
 		})
 		.selectAll('tr')
 		.data([
-			{ name: 'Cohesion', value: weights.cohesion },
-			{ name: 'Alignment', value: weights.alignment },
-			{ name: 'Separation', value: weights.separation }
+			{ name: 'Cohesion', value: params.weights.cohesion },
+			{ name: 'Alignment', value: params.weights.alignment },
+			{ name: 'Separation', value: params.weights.separation }
 		])
 		.enter()
 		.append('tr');
