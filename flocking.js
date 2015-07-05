@@ -5,9 +5,11 @@ var MAX_SPEED = 2;
 var NEIGHBOOR_RADIUS = 30;
 var MAX_FORCE = 4;
 var DESIRED_SEPARATION = 5;
-var COHESION_WEIGHT = 1;
-var SEPARATION_WEIGHT = 4;
-var ALIGNMENT_WEIGHT = 1;
+var WEIGHTS = {
+	cohesion: 1,
+	alignment: 1,
+	separation: 4
+};
 
 $(document).ready(startSample);
 
@@ -27,9 +29,10 @@ function startSample() {
 		.attr('height', HEIGHT);
 		
 	var controlsContainer = container.append('div');
-	renderControls(controlsContainer, {cohesion: COHESION_WEIGHT, alignment: ALIGNMENT_WEIGHT, separation: SEPARATION_WEIGHT});
+	renderControls(controlsContainer, WEIGHTS);
 
-	Rx.Observable.timer(0, 20).subscribe(updateSample(svgContainer, boids));
+	Rx.Observable.timer(0, 20)
+		.subscribe(updateSample(svgContainer, boids));
 }
 
 function createBoids() {
@@ -53,14 +56,14 @@ function createBoid() {
 
 function updateSample(svgContainer, boids) {
 	return function () {
-		updateBoids(boids);
-		renderBoids(svgContainer, boids);
+		updateBoids(boids, WEIGHTS);
+		updateRendering(svgContainer, boids);
 	}
 }
 
-function updateBoids(boids) {
+function updateBoids(boids, weights) {
 	_.each(boids, function (boid) {
-		var acceleration = flock(boid, boids);
+		var acceleration = flock(boid, boids, weights);
 		boid.velocity = boid.velocity.add(acceleration).clamp(MAX_SPEED);
 	
 		if (boid.position.y() + boid.velocity.y() <= 1) { // Will exit by the top
@@ -85,10 +88,10 @@ function updateBoids(boids) {
 	});
 }
 
-function flock(boid, neighboors) {
-	boid.separation = separate(boid, neighboors).multiply(SEPARATION_WEIGHT);
-	boid.alignment = align(boid, neighboors).multiply(ALIGNMENT_WEIGHT);
-	boid.cohesion = cohere(boid, neighboors).multiply(COHESION_WEIGHT);
+function flock(boid, neighboors, weights) {
+	boid.separation = separate(boid, neighboors).multiply(weights.separation);
+	boid.alignment = align(boid, neighboors).multiply(weights.alignment);
+	boid.cohesion = cohere(boid, neighboors).multiply(weights.cohesion);
 	
 	return boid.separation.add(boid.alignment).add(boid.cohesion);
 }
@@ -167,7 +170,7 @@ function steer_to(boid, target) {
 	return vector(0, 0);
 }
 
-function renderBoids(svgContainer, boids) {
+function updateRendering(svgContainer, boids) {
 	var boidsUpdate = svgContainer.selectAll('g')
 		.data(boids);
 		
