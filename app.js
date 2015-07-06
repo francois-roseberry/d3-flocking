@@ -32,7 +32,7 @@ function startSample(params) {
 		.text('Flocking sample with D3');
 		
 	var simulationModel = new SimulationModel(params, SIZE);
-	var simulationWidget = new SimulationWidget(container, simulationModel, SIZE);
+	new SimulationWidget(container, simulationModel, SIZE);
 		
 	var controlsContainer = container.append('div');
 	var controls = renderControls(controlsContainer, params);
@@ -40,13 +40,12 @@ function startSample(params) {
 	Rx.Observable.timer(0, 20)
 		.filter(function () { return !stopped; })
 		.withLatestFrom(controls.params(), function (time, params) { return params; })
-		.subscribe(updateSample(simulationWidget, simulationModel));
+		.subscribe(updateSample(simulationModel));
 }
 
-function updateSample(simulationWidget, model) {
+function updateSample(model) {
 	return function (params) {
 		model.update(params);
-		simulationWidget.update();
 	}
 }
 

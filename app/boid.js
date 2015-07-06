@@ -3,6 +3,10 @@ function boid(position, velocity) {
 		_position: position,
 		_velocity: velocity,
 		
+		separation: new Vector(0, 0),
+		alignment: new Vector(0, 0),
+		cohesion: new Vector(0, 0),
+		
 		x: function () { return this._position.x(); },
 		y: function () { return this._position.y(); },
 		update: function (boids, params) {
