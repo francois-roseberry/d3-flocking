@@ -34,7 +34,7 @@ function renderControls(container, params) {
 		.each(function (param) {
 			$(this).slider({
 				min: 1, max: 10, step: 0.5, value: param.value,
-				change: onSliderChange
+				change: onSliderChange(param.name)
 			});
 		});
 		
