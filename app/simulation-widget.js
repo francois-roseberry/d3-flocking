@@ -1,13 +1,15 @@
-function SimulationWidget(container, size) {
+function SimulationWidget(container, model, size) {
 	this._svgContainer = container.append('svg')
 		.classed('box', true)
 		.attr('width', size.width)
 		.attr('height', size.height);
+		
+	this._model = model;
 }
 
-SimulationWidget.prototype.update = function (model) {
+SimulationWidget.prototype.update = function () {
 	var boidsUpdate = this._svgContainer.selectAll('g')
-		.data(model.boids());
+		.data(this._model.boids());
 		
 	var boidRepresentations = boidsUpdate
 		.enter()

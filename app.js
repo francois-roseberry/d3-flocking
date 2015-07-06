@@ -32,7 +32,7 @@ function startSample(params) {
 		.text('Flocking sample with D3');
 		
 	var simulationModel = new SimulationModel(params, SIZE);
-	var simulationWidget = new SimulationWidget(container, SIZE);
+	var simulationWidget = new SimulationWidget(container, simulationModel, SIZE);
 		
 	var controlsContainer = container.append('div');
 	var controls = renderControls(controlsContainer, params);
@@ -46,7 +46,7 @@ function startSample(params) {
 function updateSample(simulationWidget, model) {
 	return function (params) {
 		model.update(params);
-		simulationWidget.update(model);
+		simulationWidget.update();
 	}
 }
 
