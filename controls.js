@@ -33,7 +33,8 @@ function renderControls(container, params) {
 		.append('div')
 		.each(function (param) {
 			$(this).slider({
-				min: 1, max: 10, step: 0.5, value: param.value
+				min: 1, max: 10, step: 0.5, value: param.value,
+				change: onSliderChange
 			});
 		});
 		
@@ -42,4 +43,11 @@ function renderControls(container, params) {
 			return _params.asObservable();
 		}
 	};
+	
+	function onSliderChange (name) {
+		return function (event, ui) {
+			params.weights[name] = ui.value;
+			_params.onNext(params);
+		};
+	}
 }
