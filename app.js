@@ -15,15 +15,15 @@ var PARAMS = {
 	}
 };
 
-var stopped = false;
+var task = null;
 
-$(document).ready(startSample(PARAMS));
+$(document).ready(startSample());
 
 $(window).unload(function () {
-	stopped = true;
+	task.stop();
 })
 
-function startSample(params) {
+function startSample() {
 	var container = d3.select('body')
 		.append('div')
 		.classed('sample-container', true);
@@ -31,21 +31,8 @@ function startSample(params) {
 	container.append('h1')
 		.text('Flocking sample');
 		
-	var simulationModel = new SimulationModel(params, SIZE);
-	new SimulationWidget(container, simulationModel, SIZE);
-		
-	var controlsContainer = container.append('div');
-	var controls = renderControls(controlsContainer, params);
-
-	Rx.Observable.timer(0, 20)
-		.filter(function () { return !stopped; })
-		.withLatestFrom(controls.params(), function (time, params) { return params; })
-		.subscribe(updateSample(simulationModel));
+	task = new RunSimulationTask(PARAMS, SIZE, container);
 }
 
-function updateSample(model) {
-	return function (params) {
-		model.update(params);
-	}
-}
+
 
