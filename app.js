@@ -29,7 +29,7 @@ function startSample(params) {
 		.classed('sample-container', true);
 
 	container.append('h1')
-		.text('Flocking sample with D3');
+		.text('Flocking sample');
 		
 	var simulationModel = new SimulationModel(params, SIZE);
 	new SimulationWidget(container, simulationModel, SIZE);
