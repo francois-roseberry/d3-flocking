@@ -1,39 +1,43 @@
-function boid(position, velocity) {
-	return {
-		_position: position,
-		_velocity: velocity,
-		
-		separation: new Vector(0, 0),
-		alignment: new Vector(0, 0),
-		cohesion: new Vector(0, 0),
-		
-		x: function () { return this._position.x(); },
-		y: function () { return this._position.y(); },
-		update: function (boids, params) {
-			var acceleration = flock(this, boids, params);
-			this._velocity = this._velocity.add(acceleration).clamp(params.maxSpeed);
-		
-			if (this._position.y() + this._velocity.y() <= 1) { // Will exit by the top
-				this._position.set_y(1);
-				this._velocity.set_y(-this._velocity.y());
-			} else if (this._position.y() + this._velocity.y() >= SIZE.height - 1) { // Will exit by the bottom
-				this._position.set_y(SIZE.height - 1);
-				this._velocity.set_y(-this._velocity.y());
-			} else {
-				this._position.set_y(this._position.y() + this._velocity.y());
-			}
-			
-			if (this._position.x() + this._velocity.x() <= 1) {
-				this._position.set_x(1);
-				this._velocity.set_x(-this._velocity.x());
-			} else if (this._position.x() + this._velocity.x() >= SIZE.width - 1) {
-				this._position.set_x(SIZE.width - 1);
-				this._velocity.set_x(-this._velocity.x());
-			} else {
-				this._position.set_x(this._position.x() + this._velocity.x());
-			}
-		}
-	};
+function Boid(position, velocity) {
+	this._position = position;
+	this._velocity = velocity;
+	
+	this.separation = new Vector(0, 0);
+	this.alignment = new Vector(0, 0);
+	this.cohesion = new Vector(0, 0);
+}
+
+Boid.prototype.x = function () {
+	return this._position.x();
+};
+
+Boid.prototype.y = function () {
+	return this._position.y();
+};
+
+Boid.prototype.update = function (boids, params) {
+	var acceleration = flock(this, boids, params);
+	this._velocity = this._velocity.add(acceleration).clamp(params.maxSpeed);
+
+	if (this._position.y() + this._velocity.y() <= 1) { // Will exit by the top
+		this._position.set_y(1);
+		this._velocity.set_y(-this._velocity.y());
+	} else if (this._position.y() + this._velocity.y() >= SIZE.height - 1) { // Will exit by the bottom
+		this._position.set_y(SIZE.height - 1);
+		this._velocity.set_y(-this._velocity.y());
+	} else {
+		this._position.set_y(this._position.y() + this._velocity.y());
+	}
+	
+	if (this._position.x() + this._velocity.x() <= 1) {
+		this._position.set_x(1);
+		this._velocity.set_x(-this._velocity.x());
+	} else if (this._position.x() + this._velocity.x() >= SIZE.width - 1) {
+		this._position.set_x(SIZE.width - 1);
+		this._velocity.set_x(-this._velocity.x());
+	} else {
+		this._position.set_x(this._position.x() + this._velocity.x());
+	}
 	
 	function flock (self, neighboors, params) {
 		self.separation = separate(self, neighboors, params).multiply(params.weights.separation);
@@ -116,4 +120,4 @@ function boid(position, velocity) {
 		
 		return new Vector(0, 0);
 	}
-}
+};

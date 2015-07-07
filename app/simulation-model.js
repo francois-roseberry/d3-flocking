@@ -11,7 +11,7 @@ function SimulationModel(params, size) {
 	}
 
 	function createBoid() {
-		return boid(
+		return new Boid(
 			new Vector(
 				Math.random() * size.width,
 				Math.random() * size.height),
