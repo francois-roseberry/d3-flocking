@@ -1,0 +1,5 @@
+# Build artifacts
+node_modules/
+
+# Other stuff
+*/npm-debug.log
