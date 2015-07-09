@@ -1,13 +1,18 @@
 (function() {
 	"use strict";
 	
-	exports.render = function(container, model, size) {
+	var EditSimulationParamsWidget = require('./edit-simulation-params-widget');
+	
+	exports.render = function(container, runSimulationTask, size) {
 		var svgContainer = container.append('svg')
 			.classed('box', true)
 			.attr('width', size.width)
-			.attr('height', size.height);		
+			.attr('height', size.height);
+			
+		var controlsContainer = container.append('div');
+		EditSimulationParamsWidget.render(controlsContainer, runSimulationTask.editSimulationParamsTask());
 		
-		model.boids().subscribe(function (boids) {
+		runSimulationTask.model().boids().subscribe(function (boids) {
 			update(svgContainer, boids);
 		});	
 	};

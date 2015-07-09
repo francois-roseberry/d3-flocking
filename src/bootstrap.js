@@ -19,6 +19,7 @@
 	};
 
 	var RunSimulationTask = require('./app/run-simulation-task');
+	var SimulationWidget = require('./app/simulation-widget');
 
 	var task = null;
 
@@ -37,6 +38,7 @@
 			.text('Flocking sample');
 			
 		task = RunSimulationTask.start(PARAMS, SIZE, container);
+		SimulationWidget.render(container, task, SIZE);
 	}
 }());
 
