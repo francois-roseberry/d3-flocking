@@ -34,23 +34,23 @@
 	
 	function move(self) {
 		if (self._position.y() + self._velocity.y() <= 1) { // Will exit by the top
-			self._position.set_y(1);
-			self._velocity.set_y(-self._velocity.y());
+			self._position.setY(1);
+			self._velocity.setY(-self._velocity.y());
 		} else if (self._position.y() + self._velocity.y() >= self._size.height - 1) { // Will exit by the bottom
-			self._position.set_y(self._size.height - 1);
-			self._velocity.set_y(-self._velocity.y());
+			self._position.setY(self._size.height - 1);
+			self._velocity.setY(-self._velocity.y());
 		} else {
-			self._position.set_y(self._position.y() + self._velocity.y());
+			self._position.setY(self._position.y() + self._velocity.y());
 		}
 		
 		if (self._position.x() + self._velocity.x() <= 1) {
-			self._position.set_x(1);
-			self._velocity.set_x(-self._velocity.x());
+			self._position.setX(1);
+			self._velocity.setX(-self._velocity.x());
 		} else if (self._position.x() + self._velocity.x() >= self._size.width - 1) {
-			self._position.set_x(self._size.width - 1);
-			self._velocity.set_x(-self._velocity.x());
+			self._position.setX(self._size.width - 1);
+			self._velocity.setX(-self._velocity.x());
 		} else {
-			self._position.set_x(self._position.x() + self._velocity.x());
+			self._position.setX(self._position.x() + self._velocity.x());
 		}
 	}
 	
@@ -111,13 +111,13 @@
 		});
 		
 		if (count > 0) {
-			return steer_to(self, sum.divide(count), params);
+			return steerTo(self, sum.divide(count), params);
 		}
 		
 		return sum;
 	}
 	
-	function steer_to (self, target, params) {
+	function steerTo (self, target, params) {
 		var desired = target.subtract(self._position);
 		var d = desired.magnitude();
 		

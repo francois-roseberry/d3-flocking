@@ -17,5 +17,5 @@
 	EditSimulationParamsTask.prototype.setWeight = function (name, value) {
 		this._params.weights[name] = value;
 		this._paramsSubject.onNext(this._params);
-	}
+	};
 }());

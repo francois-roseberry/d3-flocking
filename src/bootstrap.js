@@ -18,8 +18,8 @@
 		}
 	};
 
-	var RunSimulationTask = require('./app/run-simulation-task');
-	var SimulationWidget = require('./app/simulation-widget');
+	var RunSimulationTask = require('./run-simulation-task');
+	var SimulationWidget = require('./simulation-widget');
 
 	var task = null;
 
@@ -27,7 +27,7 @@
 
 	$(window).unload(function () {
 		task.stop();
-	})
+	});
 
 	function startSample() {
 		var container = d3.select('body')

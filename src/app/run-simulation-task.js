@@ -26,7 +26,7 @@
 	function update(model) {
 		return function (params) {
 			model.update(params);
-		}
+		};
 	}
 
 	RunSimulationTask.prototype.stop = function () {
