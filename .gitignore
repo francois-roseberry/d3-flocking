@@ -1,5 +1,6 @@
 # Build artifacts
 node_modules/
+target/
 
 # Other stuff
 npm-debug.log

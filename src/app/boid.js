@@ -1,32 +1,43 @@
-function Boid(position, velocity) {
-	this._position = position;
-	this._velocity = velocity;
+(function() {
+	"use strict";
 	
-	this.separation = new Vector(0, 0);
-	this.alignment = new Vector(0, 0);
-	this.cohesion = new Vector(0, 0);
-}
+	var Vector = require('./vector');
+	
+	exports.newBoid = function (position, velocity, size) {
+		return new Boid(position, velocity, size);
+	};
 
-Boid.prototype.x = function () {
-	return this._position.x();
-};
+	function Boid(position, velocity, size) {
+		this._position = position;
+		this._velocity = velocity;
+		this._size = size;
+		
+		this.separation = Vector.empty();
+		this.alignment = Vector.empty();
+		this.cohesion = Vector.empty();
+	}
 
-Boid.prototype.y = function () {
-	return this._position.y();
-};
+	Boid.prototype.x = function () {
+		return this._position.x();
+	};
 
-Boid.prototype.update = function (boids, params) {
-	var acceleration = flock(this, boids, params);
-	this._velocity = this._velocity.add(acceleration).clamp(params.maxSpeed);
+	Boid.prototype.y = function () {
+		return this._position.y();
+	};
 
-	move(this);
+	Boid.prototype.update = function (boids, params) {
+		var acceleration = flock(this, boids, params);
+		this._velocity = this._velocity.add(acceleration).clamp(params.maxSpeed);
+
+		move(this);	
+	};
 	
 	function move(self) {
 		if (self._position.y() + self._velocity.y() <= 1) { // Will exit by the top
 			self._position.set_y(1);
 			self._velocity.set_y(-self._velocity.y());
-		} else if (self._position.y() + self._velocity.y() >= SIZE.height - 1) { // Will exit by the bottom
-			self._position.set_y(SIZE.height - 1);
+		} else if (self._position.y() + self._velocity.y() >= self._size.height - 1) { // Will exit by the bottom
+			self._position.set_y(self._size.height - 1);
 			self._velocity.set_y(-self._velocity.y());
 		} else {
 			self._position.set_y(self._position.y() + self._velocity.y());
@@ -35,8 +46,8 @@ Boid.prototype.update = function (boids, params) {
 		if (self._position.x() + self._velocity.x() <= 1) {
 			self._position.set_x(1);
 			self._velocity.set_x(-self._velocity.x());
-		} else if (self._position.x() + self._velocity.x() >= SIZE.width - 1) {
-			self._position.set_x(SIZE.width - 1);
+		} else if (self._position.x() + self._velocity.x() >= self._size.width - 1) {
+			self._position.set_x(self._size.width - 1);
 			self._velocity.set_x(-self._velocity.x());
 		} else {
 			self._position.set_x(self._position.x() + self._velocity.x());
@@ -52,7 +63,7 @@ Boid.prototype.update = function (boids, params) {
 	}
 	
 	function separate (self, neighboors, params) {
-		var mean = new Vector(0, 0);
+		var mean = Vector.empty();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -71,7 +82,7 @@ Boid.prototype.update = function (boids, params) {
 	}
 	
 	function align (self, neighboors, params) {
-		var mean = new Vector(0, 0);
+		var mean = Vector.empty();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -89,7 +100,7 @@ Boid.prototype.update = function (boids, params) {
 	}
 	
 	function cohere (self, neighboors, params) {
-		var sum = new Vector(0, 0);
+		var sum = Vector.empty();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -122,6 +133,6 @@ Boid.prototype.update = function (boids, params) {
 			return desired.subtract(self._velocity).clamp(params.maxForce);
 		}
 		
-		return new Vector(0, 0);
+		return Vector.empty();
 	}
-};
+}());
