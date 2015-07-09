@@ -3,7 +3,7 @@
 	
 	var SimulationModel = require('./simulation-model');
 	var SimulationWidget = require('./simulation-widget');
-	var ControlsWidget = require('./controls-widget');
+	var EditSimulationParamsWidget = require('./edit-simulation-params-widget');
 
 	exports.start = function(params, size, container) {
 		return new RunSimulationTask(params, size, container);
@@ -15,7 +15,7 @@
 		SimulationWidget.render(container, simulationModel, size);
 		
 		var controlsContainer = container.append('div');
-		var controls = ControlsWidget.render(controlsContainer, params);
+		var controls = EditSimulationParamsWidget.render(controlsContainer, params);
 
 		Rx.Observable.timer(0, 20)
 			.takeUntil(this._stopped)
