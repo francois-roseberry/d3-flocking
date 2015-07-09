@@ -1,16 +1,21 @@
 (function() {
 	"use strict";
 	
-	exports.render = function(container, params) {
-		var _params = new Rx.BehaviorSubject(params);
+	exports.render = function(container, editSimulationParamsTask) {
 		container.append('h3')
 			.text('Controls');
 		
+		editSimulationParamsTask.params().take(1).subscribe(function (params) {
+			renderParamControls(container, editSimulationParamsTask, params);
+		});
+	};
+	
+	function renderParamControls(container, editSimulationParamsTask, params) {
 		var weightsBox = container.append('div')
 			.classed('box', true);
 			
 		weightsBox.append('span').text('Weights');
-			
+		
 		var controls = weightsBox.append('table')
 			.attr({
 				'align': 'center',
@@ -37,21 +42,14 @@
 			.each(function (param) {
 				$(this).slider({
 					min: 1, max: 10, step: 0.5, value: param.value,
-					change: onSliderChange(param.name)
+					change: onSliderChange(editSimulationParamsTask, param.name)
 				});
 			});
-			
-		return {
-			params: function () {
-				return _params.asObservable();
-			}
-		};	
-	};
+	}
 	
-	function onSliderChange (name) {
+	function onSliderChange (editSimulationParamsTask, name) {
 		return function (event, ui) {
-			params.weights[name] = ui.value;
-			_params.onNext(params);
+			editSimulationParamsTask.setWeight(name, ui.value);
 		};
 	}
 }());

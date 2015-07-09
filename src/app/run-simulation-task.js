@@ -3,6 +3,7 @@
 	
 	var SimulationModel = require('./simulation-model');
 	var SimulationWidget = require('./simulation-widget');
+	var EditSimulationParamsTask = require('./edit-simulation-params-task');
 	var EditSimulationParamsWidget = require('./edit-simulation-params-widget');
 
 	exports.start = function(params, size, container) {
@@ -15,11 +16,12 @@
 		SimulationWidget.render(container, simulationModel, size);
 		
 		var controlsContainer = container.append('div');
-		var controls = EditSimulationParamsWidget.render(controlsContainer, params);
+		var task = EditSimulationParamsTask.start(params);
+		EditSimulationParamsWidget.render(controlsContainer, task);
 
 		Rx.Observable.timer(0, 20)
 			.takeUntil(this._stopped)
-			.withLatestFrom(controls.params(), function (time, params) { return params; })
+			.withLatestFrom(task.params(), function (time, params) { return params; })
 			.subscribe(updateSample(simulationModel));
 	}
 	
