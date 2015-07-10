@@ -12,9 +12,9 @@
 		this._velocity = velocity;
 		this._size = size;
 		
-		this.separation = Vector.empty();
-		this.alignment = Vector.empty();
-		this.cohesion = Vector.empty();
+		this.separation = Vector.zero();
+		this.alignment = Vector.zero();
+		this.cohesion = Vector.zero();
 	}
 
 	Boid.prototype.x = function () {
@@ -63,7 +63,7 @@
 	}
 	
 	function separate (self, neighboors, params) {
-		var mean = Vector.empty();
+		var mean = Vector.zero();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -82,7 +82,7 @@
 	}
 	
 	function align (self, neighboors, params) {
-		var mean = Vector.empty();
+		var mean = Vector.zero();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -100,7 +100,7 @@
 	}
 	
 	function cohere (self, neighboors, params) {
-		var sum = Vector.empty();
+		var sum = Vector.zero();
 		var count = 0;
 		_.each(neighboors, function (neighboor) {
 			var d = neighboor._position.distance(self._position);
@@ -133,6 +133,6 @@
 			return desired.subtract(self._velocity).clamp(params.maxForce);
 		}
 		
-		return Vector.empty();
+		return Vector.zero();
 	}
 }());
