@@ -53,7 +53,15 @@ module.exports = function(grunt) {
 
 			src: ['target/stagger/*.test.js']
 		}
-    }
+    },
+	
+	uglify: {
+		target: {
+			files: {
+				'target/dist.min.js': ['target/dist.js']
+			}
+		}
+	}
   });
 
   grunt.loadNpmTasks('grunt-browserify');
@@ -61,6 +69,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   
-  grunt.registerTask('default', ['jshint', 'copy:flatten', 'browserify', 'concat', 'mochaTest']);
+  grunt.registerTask('default', ['jshint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'uglify']);
 };
