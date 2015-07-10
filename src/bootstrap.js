@@ -20,8 +20,13 @@
 
 	var RunSimulationTask = require('./run-simulation-task');
 	var SimulationWidget = require('./simulation-widget');
+	
+	var failFast = require('./fail-fast');
 
 	var task = null;
+	
+	failFast.crashOnUnhandledException();
+    failFast.crashOnResourceLoadingError();
 
 	$(document).ready(startSample());
 
