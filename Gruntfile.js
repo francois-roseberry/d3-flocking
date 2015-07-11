@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 	copy: {
 		flatten: {
 			expand: true,
-			src: ['src/**'],
+			src: ['src/**/*.js'],
 			dest: 'target/stagger/',
 			filter: 'isFile',
 			flatten: true
@@ -79,7 +79,9 @@ module.exports = function(grunt) {
 				'target/dist.min.css': ['src/**/*.css']
 			}
 		}
-	}
+	},
+	
+	clean: ['target/**']
   });
 
   grunt.loadNpmTasks('grunt-browserify');
@@ -90,9 +92,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('minify', ['uglify', 'cssmin']);
+  grunt.registerTask('package', ['copy:flatten', 'browserify', 'concat', 'minify']);
   
-  grunt.registerTask('default', ['lint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'minify']);
+  grunt.registerTask('default', ['lint', 'package', 'mochaTest']);
 };
