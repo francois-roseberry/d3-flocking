@@ -47,6 +47,7 @@ module.exports = function(grunt) {
 				'lib/jquery.js',
 				'lib/jquery-ui.min.js',
 				'lib/rx.all.min.js',
+				'lib/underscore.min.js',
 				'node_modules/expect.js/index.js'
 			],
 			dest: './target/dependencies.js'
