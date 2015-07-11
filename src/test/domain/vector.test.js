@@ -10,6 +10,10 @@
 		it('has a magnitude of 0', function () {
 			expect(vector.magnitude()).to.be(0);
 		});
+		
+		it('normalizing it returns the same vector', function () {
+			expect(vector.normalize()).to.be(vector);
+		});
 	});
 	
 	describe('A unit vector', function () {
@@ -17,6 +21,10 @@
 		
 		it('has a magnitude of 1', function () {
 			expect(vector.magnitude()).to.be(1);
+		});
+		
+		it('normalizing it returns the same vector', function () {
+			expect(vector.normalize()).to.eql(vector);
 		});
 	});
 	
