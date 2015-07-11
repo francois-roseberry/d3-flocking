@@ -11,7 +11,7 @@
 		precondition(size, 'SimulationWidget requires the size of the smulation');
 		
 		var svgContainer = container.append('svg')
-			.classed('box', true)
+			.classed('flocking-box', true)
 			.attr('width', size.width)
 			.attr('height', size.height);
 			

@@ -17,7 +17,7 @@
 	
 	function renderParamControls(container, editSimulationParamsTask, params) {
 		var weightsBox = container.append('div')
-			.classed('box', true);
+			.classed('simulation-controls-box', true);
 			
 		weightsBox.append('span').text('Weights');
 		

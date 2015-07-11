@@ -42,6 +42,10 @@ module.exports = function(grunt) {
 				'node_modules/expect.js/index.js'
 			],
 			dest: './target/dependencies.js'
+		},
+		css: {
+			src: ['src/**/*.css'],
+			dest: './target/dist.css'
 		}
 	},
 	
