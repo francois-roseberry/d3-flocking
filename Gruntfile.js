@@ -4,14 +4,22 @@ module.exports = function(grunt) {
   grunt.initConfig({
 	jshint: {
 		options: {
-			jshintrc: "jshintrc"
+			jshintrc: "build/jshintrc"
 		},
-
 		all: {
 			src: [
 				'Gruntfile.js',
-				'src/**/*.js',
+				'src/**/*.js'
 			]
+		}
+	},
+	
+	csslint: {
+		options: {
+			csslintrc: 'build/csslintrc'
+		},
+		all: {
+			src: ['src/**/*.css']
 		}
 	},
 		
@@ -74,13 +82,15 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   
+  grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('minify', ['uglify', 'cssmin']);
   
-  grunt.registerTask('default', ['jshint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'minify']);
+  grunt.registerTask('default', ['lint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'minify']);
 };
