@@ -1,7 +1,12 @@
 (function() {
 	"use strict";
 	
+	var precondition = require('./contract').precondition;
+	
 	exports.render = function(container, editSimulationParamsTask) {
+		precondition(container, 'EditSimulationParamsWidget requires a container to render into');
+		precondition(editSimulationParamsTask, 'EditSimulationParamsWidget requires an EditSimulationParamsTask');
+		
 		container.append('h3')
 			.text('Controls');
 		

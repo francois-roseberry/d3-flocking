@@ -3,7 +3,13 @@
 	
 	var Vector = require('./vector');
 	
+	var precondition = require('./contract').precondition;
+	
 	exports.newBoid = function (position, velocity, size) {
+		precondition(position, 'A boid requires an initial position');
+		precondition(velocity, 'A boid requires an initial velocity');
+		precondition(size, 'A boid requires the size of its container');
+		
 		return new Boid(position, velocity, size);
 	};
 
@@ -26,6 +32,9 @@
 	};
 
 	Boid.prototype.update = function (boids, params) {
+		precondition(boids, 'Updating a boid requires a list of all the boids around');
+		precondition('Updating a boid requires a params object to hold the parameters for the flocking algorithm');
+		
 		var acceleration = flock(this, boids, params);
 		this._velocity = this._velocity.add(acceleration).clamp(params.maxSpeed);
 

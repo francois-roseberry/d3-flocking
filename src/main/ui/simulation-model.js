@@ -4,7 +4,12 @@
 	var Vector = require('./vector');
 	var Boid = require('./boid');
 	
+	var precondition = require('./contract').precondition;
+	
 	exports.newModel = function(params, size) {
+		precondition(params, 'A SimulationModel requires the parameters of the simulation');
+		precondition(size, 'A SimulationModel requires the size of the simulation');
+		
 		return new SimulationModel(params, size);
 	};
 

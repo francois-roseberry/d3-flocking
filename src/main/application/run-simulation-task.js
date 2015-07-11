@@ -3,12 +3,17 @@
 	
 	var SimulationModel = require('./simulation-model');
 	var EditSimulationParamsTask = require('./edit-simulation-params-task');
+	
+	var precondition = require('./contract').precondition;
 
-	exports.start = function(params, size, container) {
-		return new RunSimulationTask(params, size, container);
+	exports.start = function(params, size) {
+		precondition(params, 'RunSimulationTask requires the parameters of the simulation');
+		precondition(size, 'RunSimulationTask requires the size of the simulation');
+		
+		return new RunSimulationTask(params, size);
 	};
 
-	function RunSimulationTask(params, size, container) {
+	function RunSimulationTask(params, size) {
 		this._stopped = new Rx.AsyncSubject();
 		this._editSimulationParamsTask = EditSimulationParamsTask.start(params);
 		this._model = SimulationModel.newModel(params, size);

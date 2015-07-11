@@ -1,7 +1,11 @@
 (function() {
 	"use strict";
 	
+	var precondition = require('./contract').precondition;
+
 	exports.start = function(params) {
+		precondition(params, 'EditSimulationParamsTask requires athe parameters of the simulation');
+		
 		return new EditSimulationParamsTask(params);
 	};
 	
@@ -15,6 +19,9 @@
 	};
 	
 	EditSimulationParamsTask.prototype.setWeight = function (name, value) {
+		precondition(name, 'Setting a weight of an EditSimulationParamsTask requires the weight name');
+		precondition(value, 'Setting a weight of an EditSimulationParamsTask requires the weight value');
+		
 		this._params.weights[name] = value;
 		this._paramsSubject.onNext(this._params);
 	};

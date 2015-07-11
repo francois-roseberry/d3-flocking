@@ -3,7 +3,13 @@
 	
 	var EditSimulationParamsWidget = require('./edit-simulation-params-widget');
 	
+	var precondition = require('./contract').precondition;
+	
 	exports.render = function(container, runSimulationTask, size) {
+		precondition(container, 'SimulationWidget requires a container to render into');
+		precondition(runSimulationTask, 'SimulationWidget requires a RunSimulationTask');
+		precondition(size, 'SimulationWidget requires the size of the smulation');
+		
 		var svgContainer = container.append('svg')
 			.classed('box', true)
 			.attr('width', size.width)
