@@ -42,10 +42,6 @@ module.exports = function(grunt) {
 				'node_modules/expect.js/index.js'
 			],
 			dest: './target/dependencies.js'
-		},
-		css: {
-			src: ['src/**/*.css'],
-			dest: './target/dist.css'
 		}
 	},
 	
@@ -65,6 +61,14 @@ module.exports = function(grunt) {
 				'target/dist.min.js': ['target/dist.js']
 			}
 		}
+	},
+	
+	cssmin: {
+		target: {
+			files: {
+				'target/dist.min.css': ['src/**/*.css']
+			}
+		}
 	}
   });
 
@@ -74,6 +78,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   
-  grunt.registerTask('default', ['jshint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'uglify']);
+  grunt.registerTask('minify', ['uglify', 'cssmin']);
+  
+  grunt.registerTask('default', ['jshint', 'copy:flatten', 'browserify', 'concat', 'mochaTest', 'minify']);
 };
