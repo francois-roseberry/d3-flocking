@@ -30,6 +30,18 @@ module.exports = function(grunt) {
 			dest: 'target/stagger/',
 			filter: 'isFile',
 			flatten: true
+		},
+		
+		html: {
+			src: ['src/static/index.html'],
+			dest: 'target/index.html',
+			filter: 'isFile'
+		},
+		
+		style: {
+			src: ['lib/jquery-ui.min.css'],
+			dest: 'target/',
+			filter: 'isFile'
 		}
 	},
 		
@@ -96,7 +108,7 @@ module.exports = function(grunt) {
   
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('minify', ['uglify', 'cssmin']);
-  grunt.registerTask('package', ['copy:flatten', 'browserify', 'concat', 'minify']);
+  grunt.registerTask('package', ['copy', 'browserify', 'concat', 'minify']);
   
   grunt.registerTask('default', ['lint', 'package', 'mochaTest']);
 };
