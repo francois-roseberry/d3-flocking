@@ -1,0 +1,22 @@
+{
+  "name": "flocking-js",
+  "version": "1.0.0",
+  "description": "Flocking sample",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francois-roseberry/flocking-js.git"
+  },
+  "author": "francois-roseberry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/francois-roseberry/flocking-js/issues"
+  },
+  "homepage": "https://github.com/francois-roseberry/flocking-js#readme",
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}
