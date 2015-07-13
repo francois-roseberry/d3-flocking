@@ -7,8 +7,10 @@
 		precondition(container, 'EditSimulationParamsWidget requires a container to render into');
 		precondition(editSimulationParamsTask, 'EditSimulationParamsWidget requires an EditSimulationParamsTask');
 		
-		container.append('h3')
-			.text('Controls');
+		container.classed({
+					'simulation-controls': true,
+					'controls-box': true
+					});
 		
 		editSimulationParamsTask.params().take(1).subscribe(function (params) {
 			renderParamControls(container, editSimulationParamsTask, params);
@@ -17,7 +19,7 @@
 	
 	function renderParamControls(container, editSimulationParamsTask, params) {
 		var weightsBox = container.append('div')
-			.classed('simulation-controls-box', true);
+		.classed('controls-box', true);
 			
 		weightsBox.append('span').text('Weights');
 		

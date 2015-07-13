@@ -35,9 +35,7 @@
 	});
 
 	function startSample() {
-		var container = d3.select('body')
-			.append('div')
-			.classed('sample-container', true);
+		var container = d3.select('.sample-container');
 
 		container.append('h1')
 			.text('Flocking sample');

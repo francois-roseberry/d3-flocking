@@ -1,3 +1,10 @@
-.simulation-controls-box {
+.simulation-controls {
+	background-color: #d3d3d3;
+	width: 400px;
+	float: left;
+}
+
+.controls-box {
 	border: 1px solid black;
+	padding: 5px;
 }
