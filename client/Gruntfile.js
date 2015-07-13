@@ -102,12 +102,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-clean');
   
   grunt.registerTask('lint', ['jshint', 'csslint']);
-  grunt.registerTask('minify', ['uglify', 'cssmin']);
+  grunt.registerTask('minify', ['cssmin']);
   grunt.registerTask('package', ['copy', 'browserify', 'concat', 'minify']);
   
   grunt.registerTask('default', ['lint', 'package', 'mochaTest']);
