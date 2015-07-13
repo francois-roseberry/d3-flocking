@@ -34,13 +34,13 @@ module.exports = function(grunt) {
 		
 		html: {
 			src: ['src/static/index.html'],
-			dest: 'target/index.html',
+			dest: 'target/dist/index.html',
 			filter: 'isFile'
 		},
 		
 		style: {
 			src: ['lib/jquery-ui.min.css'],
-			dest: 'target/',
+			dest: 'target/dist/',
 			filter: 'isFile'
 		}
 	},
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 	browserify: {
 		dist: {
 			files: {
-				'./target/dist.js': ['target/stagger/bootstrap.js']
+				'./target/dist/app.js': ['target/stagger/bootstrap.js']
 			}
 		}
 	},
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 				'lib/d3.min.js',
 				'node_modules/expect.js/index.js'
 			],
-			dest: './target/dependencies.js'
+			dest: './target/dist/dependencies.js'
 		}
 	},
 	
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 	uglify: {
 		target: {
 			files: {
-				'target/dist.min.js': ['target/dist.js']
+				'target/dist/app.min.js': ['target/dist/app.js']
 			}
 		}
 	},
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 	cssmin: {
 		target: {
 			files: {
-				'target/dist.min.css': ['src/**/*.css']
+				'target/dist/styles.min.css': ['src/**/*.css']
 			}
 		}
 	},
