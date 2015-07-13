@@ -1,12 +1,13 @@
 # flocking-js
 Implementation of flocking particles with D3
 
-Run 'grunt' on the command line in the project directory to build the sources.
+Run 'grunt' on the command line in the client/ subdirectory to build the sources.
 It will run them through jshint, flatten, link them with browserify, run tests with mocha and minify the output.
-It will produce a final file target/dist.js that will be included in the file index.html,
-entry point of the app. Simply run it in the browser [Only tested in Chrome though].
+It will produce files in target/dist/. Run grunt clean to delete the target/. Run it with run.bat in the main directory. 
 
-To setup the project after downloading the sources, install node.js, then run 'npm install'
-in the project directory. That's it. After, the 'grunt' command should be available
+To setup the project after downloading the sources, install node.js, then run 'npm install' in the client/ subdirectory.
+After, the 'grunt' command should be available to build from that directory.
 
-TODO : expand the tests, try to run them in the original files (to avoid getting a stack trace in the dist file), add preconditions, concatenate and lint the CSS
+Install Express (for the server) by running npm install from the project directory.
+
+TODO : get a stacktrace for a js error and run tests with dependencies
