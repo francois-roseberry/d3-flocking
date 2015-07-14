@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 		},
 		
 		style: {
-			src: ['lib/jquery-ui.min.css'],
+			src: ['bower_components/jquery-ui/themes/ui-darkness/jquery-ui.min.css'],
 			dest: 'target/dist/',
 			filter: 'isFile'
 		}
@@ -56,11 +56,11 @@ module.exports = function(grunt) {
 	concat: {
 		dependencies: {
 			src: [
-				'lib/jquery.js',
-				'lib/jquery-ui.min.js',
-				'lib/rx.all.min.js',
-				'lib/underscore.min.js',
-				'lib/d3.min.js',
+				'bower_components/jquery/dist/jquery.min.js',
+				'bower_components/jquery-ui/jquery-ui.min.js',
+				'bower_components/rxjs/dist/rx.all.min.js',
+				'bower_components/underscore/underscore-min.js',
+				'bower_components/d3/d3.js',
 				'node_modules/expect.js/index.js'
 			],
 			dest: './target/dist/dependencies.js'

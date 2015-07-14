@@ -1,0 +1,11 @@
+{
+  "name": "flocking-js",
+  "dependencies": {
+    "d3": "~3.5.6",
+    "underscore": "~1.8.3",
+    "jquery": "~2.1.4",
+    "expect": "~0.3.1",
+    "rxjs": "~2.5.2",
+    "jquery-ui": "~1.11.4"
+  }
+}
