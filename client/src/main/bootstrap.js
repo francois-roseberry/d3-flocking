@@ -19,6 +19,7 @@
 	};
 	
 	var d3 = require('d3');
+	var $ = require('jquery');
 
 	var RunSimulationTask = require('./run-simulation-task');
 	var SimulationWidget = require('./simulation-widget');

@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+	
+	var $ = require('jquery');
 
     exports.crashOnUnhandledException = function () {
         // Fail-fast if an unhandled exception occur

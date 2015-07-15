@@ -36,12 +36,6 @@ module.exports = function(grunt) {
 			src: ['src/static/index.html'],
 			dest: 'target/dist/index.html',
 			filter: 'isFile'
-		},
-		
-		style: {
-			src: ['bower_components/jquery-ui/themes/ui-darkness/jquery-ui.min.css'],
-			dest: 'target/dist/',
-			filter: 'isFile'
 		}
 	},
 		
@@ -50,16 +44,6 @@ module.exports = function(grunt) {
 			files: {
 				'./target/dist/app.js': ['target/stagger/bootstrap.js']
 			}
-		}
-	},
-	
-	concat: {
-		dependencies: {
-			src: [
-				'bower_components/jquery/dist/jquery.min.js',
-				'bower_components/jquery-ui/jquery-ui.min.js'
-			],
-			dest: './target/dist/dependencies.js'
 		}
 	},
 	
@@ -73,18 +57,13 @@ module.exports = function(grunt) {
 		}
     },
 	
-	uglify: {
-		target: {
-			files: {
-				'target/dist/app.min.js': ['target/dist/app.js']
-			}
-		}
-	},
-	
 	cssmin: {
 		target: {
 			files: {
-				'target/dist/styles.min.css': ['src/**/*.css']
+				'target/dist/styles.min.css': [
+												'src/**/*.css',
+												'node_modules/jquery-ui/themes/ui-lightness/jquery-ui.min.css'
+											]
 			}
 		}
 	},
@@ -97,13 +76,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-clean');
   
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('minify', ['cssmin']);
-  grunt.registerTask('package', ['copy', 'browserify', 'concat', 'minify']);
+  grunt.registerTask('package', ['copy', 'browserify', 'minify']);
   
   grunt.registerTask('default', ['lint', 'package', 'mochaTest']);
 };

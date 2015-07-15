@@ -1,6 +1,9 @@
 (function() {
 	"use strict";
 	
+	var $ = require('jquery');
+	require('jquery-ui');
+	
 	var precondition = require('./contract').precondition;
 	
 	exports.render = function(container, editSimulationParamsTask) {
