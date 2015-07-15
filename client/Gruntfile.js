@@ -57,11 +57,7 @@ module.exports = function(grunt) {
 		dependencies: {
 			src: [
 				'bower_components/jquery/dist/jquery.min.js',
-				'bower_components/jquery-ui/jquery-ui.min.js',
-				'bower_components/rxjs/dist/rx.all.min.js',
-				'bower_components/underscore/underscore-min.js',
-				'bower_components/d3/d3.js',
-				'node_modules/expect.js/index.js'
+				'bower_components/jquery-ui/jquery-ui.min.js'
 			],
 			dest: './target/dist/dependencies.js'
 		}

@@ -1,6 +1,8 @@
 (function() {
 	"use strict";
 	
+	var Rx = require('rx');
+	
 	var precondition = require('./contract').precondition;
 
 	exports.start = function(params) {

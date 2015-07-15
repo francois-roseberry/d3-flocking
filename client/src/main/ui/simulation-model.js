@@ -1,6 +1,9 @@
 (function() {
 	"use strict";
 	
+	var _ = require('underscore');
+	var Rx = require('rx');
+	
 	var Vector = require('./vector');
 	var Boid = require('./boid');
 	

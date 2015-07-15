@@ -1,6 +1,8 @@
 (function() {
 	"use strict";
 	
+	var Rx = require('rx');
+	
 	var SimulationModel = require('./simulation-model');
 	var EditSimulationParamsTask = require('./edit-simulation-params-task');
 	

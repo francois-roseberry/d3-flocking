@@ -17,6 +17,8 @@
 			separation: 4
 		}
 	};
+	
+	var d3 = require('d3');
 
 	var RunSimulationTask = require('./run-simulation-task');
 	var SimulationWidget = require('./simulation-widget');
