@@ -36,6 +36,14 @@ module.exports = function(grunt) {
 			src: ['src/static/index.html'],
 			dest: 'target/dist/index.html',
 			filter: 'isFile'
+		},
+		
+		jqueryUiImages: {
+			expand: true,
+			cwd: 'node_modules/jquery-ui/themes/vader/images/',
+			src: ['**'],
+			dest: 'target/dist/images/',
+			filter: 'isFile'
 		}
 	},
 		
@@ -62,7 +70,7 @@ module.exports = function(grunt) {
 			files: {
 				'target/dist/styles.min.css': [
 												'src/**/*.css',
-												'node_modules/jquery-ui/themes/ui-lightness/jquery-ui.min.css'
+												'node_modules/jquery-ui/themes/vader/jquery-ui.min.css'
 											]
 			}
 		}
