@@ -5,8 +5,8 @@
 	
 	var precondition = require('./contract').precondition;
 
-	exports.start = function(params) {
-		precondition(params, 'EditSimulationParamsTask requires athe parameters of the simulation');
+	exports.start = function (params) {
+		precondition(params, 'EditSimulationParamsTask requires the parameters of the simulation');
 		
 		return new EditSimulationParamsTask(params);
 	};

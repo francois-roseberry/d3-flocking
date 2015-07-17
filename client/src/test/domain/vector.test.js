@@ -51,5 +51,9 @@
 		it('has a magnitude of 5', function () {
 			expect(vector.magnitude()).to.be(5);
 		});
+		
+		it('has a distance with itself of 0', function() {
+			expect(vector.distance(vector)).to.be(0);
+		});
 	});
 }());
