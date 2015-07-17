@@ -90,6 +90,8 @@ module.exports = function(grunt) {
   grunt.registerTask('lint', ['jshint', 'csslint']);
   grunt.registerTask('minify', ['cssmin']);
   grunt.registerTask('package', ['copy', 'browserify', 'minify']);
+  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('check', ['lint', 'copy', 'test']);
   
-  grunt.registerTask('default', ['lint', 'package', 'mochaTest']);
+  grunt.registerTask('default', ['lint', 'package', 'test']);
 };
