@@ -18,6 +18,11 @@
 		it('normalizing it returns the same vector', function () {
 			expect(vector.normalize()).to.be(vector);
 		});
+		
+		it('distance with any vector is the magnitude of that vector', function() {
+			var otherVector = Vector.newVector(3,4);
+			expect(vector.distance(otherVector)).to.eql(otherVector.magnitude());
+		});
 	});
 	
 	describe('A unit vector', function () {
