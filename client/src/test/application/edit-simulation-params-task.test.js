@@ -7,11 +7,18 @@
 	
 	describe('The EditSimulationParamsTask', function () {
 		var task;
-		var params;
+		var PARAMS;
 		
 		beforeEach(function () {
-			params = { weights: {}};
-			task = EditSimulationParamsTask.start(params);
+			PARAMS = { weights: {}};
+			task = EditSimulationParamsTask.start(PARAMS);
+		});
+		
+		it('fire an event at start with the initial params', function (done) {
+			task.params().subscribe(function (params) {
+				expect(params).to.eql(PARAMS);
+				done();
+			});
 		});
 		
 		it('fire an event when one of its weights is set', function (done) {
