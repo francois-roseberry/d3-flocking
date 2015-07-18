@@ -3,6 +3,7 @@
 	
 	var expect = require('expect.js');
 	
+	var SimulationParams = require('./simulation-params');
 	var EditSimulationParamsTask = require('./edit-simulation-params-task');
 	
 	describe('The EditSimulationParamsTask', function () {
@@ -10,7 +11,7 @@
 		var PARAMS;
 		
 		beforeEach(function () {
-			PARAMS = { weights: {}};
+			PARAMS = SimulationParams.params();
 			task = EditSimulationParamsTask.start(PARAMS);
 		});
 		
@@ -24,10 +25,13 @@
 		it('fire an event when one of its weights is set', function (done) {
 			var NAME = 'weight1';
 			var VALUE = 10;
+			var expectedParams = SimulationParams.params();
+			expectedParams.weights[NAME] = VALUE;
+				
 			task.setWeight(NAME, VALUE);
 			
 			task.params().subscribe(function (params) {
-				expect(params.weights[NAME]).to.eql(VALUE);
+				expect(params).to.eql(expectedParams);
 				done();
 			});
 		});

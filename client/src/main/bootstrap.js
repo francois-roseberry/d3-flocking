@@ -5,22 +5,11 @@
 		width: 600,
 		height: 400
 	};
-	var PARAMS = {
-		nbBoids: 100,
-		neighboorRadius: 30,
-		desiredSeparation: 5,
-		maxSpeed: 2,
-		maxForce: 4,
-		weights: {
-			cohesion: 1,
-			alignment: 1,
-			separation: 4
-		}
-	};
 	
 	var d3 = require('d3');
 	var $ = require('jquery');
 
+	var SimulationParams = require('./simulation-params');
 	var RunSimulationTask = require('./run-simulation-task');
 	var SimulationWidget = require('./simulation-widget');
 	
@@ -43,7 +32,7 @@
 		container.append('h1')
 			.text('Flocking sample');
 			
-		task = RunSimulationTask.start(PARAMS, SIZE, container);
+		task = RunSimulationTask.start(SimulationParams.params(), SIZE, container);
 		SimulationWidget.render(container, task, SIZE);
 	}
 }());
