@@ -11,4 +11,4 @@ After, the 'grunt' command should be available to build from that directory.
 
 Install Express (for the server) by running npm install from the project directory.
 
-TODO : run tests with dependencies
+TODO : run ui tests with phantomjs/selenium
