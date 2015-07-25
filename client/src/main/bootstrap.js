@@ -5,9 +5,6 @@
 		width: 600,
 		height: 400
 	};
-	
-	var d3 = require('d3');
-	var $ = require('jquery');
 
 	var SimulationParams = require('./simulation-params');
 	var RunSimulationTask = require('./run-simulation-task');

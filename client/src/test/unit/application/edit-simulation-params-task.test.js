@@ -1,8 +1,6 @@
 (function() {
 	"use strict";
 	
-	var expect = require('expect.js');
-	
 	var SimulationParams = require('./simulation-params');
 	var EditSimulationParamsTask = require('./edit-simulation-params-task');
 	

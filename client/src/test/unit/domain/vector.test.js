@@ -1,7 +1,6 @@
 (function() {
 	"use strict";
 	
-	var expect = require('expect.js');
 	var Vector = require('./vector');
 	
 	describe('A zero vector', function () {

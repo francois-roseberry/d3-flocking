@@ -1,8 +1,6 @@
 (function() {
 	"use strict";
 	
-	var _ = require('underscore');
-	
 	var Vector = require('./vector');
 	
 	var precondition = require('./contract').precondition;

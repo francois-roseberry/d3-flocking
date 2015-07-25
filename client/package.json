@@ -11,12 +11,19 @@
     "grunt": "~0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-csslint": "^0.4.0",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.2.5"
+    "karma": "^0.13.3",
+    "karma-commonjs": "0.0.13",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "mocha": "^2.2.5",
+    "phantomjs": "^1.9.17",
+    "selenium-webdriver": "^2.46.1"
   },
   "dependencies": {
     "d3": "^3.5.6",
