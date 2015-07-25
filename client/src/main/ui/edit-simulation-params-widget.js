@@ -7,13 +7,15 @@
 		precondition(container, 'EditSimulationParamsWidget requires a container to render into');
 		precondition(editSimulationParamsTask, 'EditSimulationParamsWidget requires an EditSimulationParamsTask');
 		
-		container.classed({
-					'simulation-controls': true,
-					'controls-box': true
-					});
+		var controlsContainer = d3.select(container[0])
+			.append('div')
+			.classed({
+				'simulation-controls': true,
+				'controls-box': true
+			});
 		
 		editSimulationParamsTask.params().take(1).subscribe(function (params) {
-			renderParamControls(container, editSimulationParamsTask, params);
+			renderParamControls(controlsContainer, editSimulationParamsTask, params);
 		});
 	};
 	

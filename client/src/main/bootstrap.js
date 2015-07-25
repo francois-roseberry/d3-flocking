@@ -24,12 +24,12 @@
 	});
 
 	function startSample() {
-		var container = d3.select('.sample-container');
+		var container = $('.sample-container');
 
-		container.append('h1')
+		d3.select(container[0]).append('h1')
 			.text('Flocking sample');
 			
-		task = RunSimulationTask.start(SimulationParams.params(), SIZE, container);
+		task = RunSimulationTask.start(SimulationParams.params(), SIZE);
 		SimulationWidget.render(container, task, SIZE);
 	}
 }());

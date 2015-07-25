@@ -10,13 +10,13 @@
 		precondition(runSimulationTask, 'SimulationWidget requires a RunSimulationTask');
 		precondition(size, 'SimulationWidget requires the size of the smulation');
 		
-		var svgContainer = container.append('svg')
+		var svgContainer = d3.select(container[0])
+			.append('svg')
 			.classed('flocking-box', true)
 			.attr('width', size.width)
 			.attr('height', size.height);
 			
-		var controlsContainer = container.append('div');
-		EditSimulationParamsWidget.render(controlsContainer, runSimulationTask.editSimulationParamsTask());
+		EditSimulationParamsWidget.render(container, runSimulationTask.editSimulationParamsTask());
 		
 		runSimulationTask.model().boids().subscribe(function (boids) {
 			update(svgContainer, boids);

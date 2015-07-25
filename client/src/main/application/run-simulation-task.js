@@ -6,7 +6,7 @@
 	
 	var precondition = require('./contract').precondition;
 
-	exports.start = function(params, size) {
+	exports.start = function (params, size) {
 		precondition(params, 'RunSimulationTask requires the parameters of the simulation');
 		precondition(size, 'RunSimulationTask requires the size of the simulation');
 		
