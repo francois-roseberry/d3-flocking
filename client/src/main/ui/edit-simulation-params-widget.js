@@ -32,9 +32,9 @@
 			})
 			.selectAll('tr')
 			.data([
-				{ name: 'Cohesion', value: params.weights.cohesion },
-				{ name: 'Alignment', value: params.weights.alignment },
-				{ name: 'Separation', value: params.weights.separation }
+				{ id: 'cohesion', name: 'Cohesion', value: params.weights.cohesion },
+				{ id: 'alignment', name: 'Alignment', value: params.weights.alignment },
+				{ id: 'separation', name: 'Separation', value: params.weights.separation }
 			])
 			.enter()
 			.append('tr');
@@ -48,10 +48,13 @@
 			.append('td')
 			.attr('width', 300)
 			.append('div')
+			.attr('data-ui', function (param) {
+				return 'slider-' + param.id;
+			})
 			.each(function (param) {
 				$(this).slider({
 					min: 1, max: 10, step: 0.5, value: param.value,
-					change: onSliderChange(editSimulationParamsTask, param.name)
+					change: onSliderChange(editSimulationParamsTask, param.id)
 				});
 			});
 	}

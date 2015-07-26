@@ -10,7 +10,6 @@
 	};
 	
 	function EditSimulationParamsTask(params) {
-		this._params = params;
 		this._paramsSubject= new Rx.BehaviorSubject(params);
 	}
 	
@@ -22,7 +21,10 @@
 		precondition(name, 'Setting a weight of an EditSimulationParamsTask requires the weight name');
 		precondition(value, 'Setting a weight of an EditSimulationParamsTask requires the weight value');
 		
-		this._params.weights[name] = value;
-		this._paramsSubject.onNext(this._params);
+		var self = this;
+		this._paramsSubject.take(1).subscribe(function (params) {
+			params.weights[name] = value;
+			self._paramsSubject.onNext(params);
+		});
 	};
 }());
