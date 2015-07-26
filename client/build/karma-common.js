@@ -19,7 +19,7 @@ exports.withDefault = function (karma, specificConfiguration) {
         // The order is important!
         files: [
             'node_modules/expect.js/index.js',
-			'target/dist/dependencies.js',
+			'target/dist/lib/dependencies.js',
             {pattern: 'target/dist/index.html', watched: false},
             {pattern: 'target/dist/images/*', included: false, served: true},
 			'target/stagger/src/**/*.js'

@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 		browserify: {
 			dist: {
 				files: {
-					'./target/dist/app.js': ['target/stagger/src/bootstrap.js']
+					'./target/dist/lib/app.js': ['target/stagger/src/bootstrap.js']
 				}
 			}
 		},
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 					'node_modules/jquery/dist/jquery.min.js',
 					'node_modules/jquery-ui/jquery-ui.js'
 				],
-				dest: 'target/dist/dependencies.js'
+				dest: 'target/dist/lib/dependencies.js'
 			}
 		},
 			
