@@ -21,5 +21,16 @@
 		it('is rendered in the given container', function() {
 			domContext.assertOneOf('.flocking-box');
 		});
+		
+		it('renders each boid', function () {
+			domContext.assertElementCount('.flocking-box > g', PARAMS.nbBoids);
+			domContext.assertElementCount('g > .boid', PARAMS.nbBoids);
+		});
+		
+		it('renders the 3 vectors for each boid', function () {
+			domContext.assertElementCount('g > .separation', PARAMS.nbBoids);
+			domContext.assertElementCount('g > .alignment', PARAMS.nbBoids);
+			domContext.assertElementCount('g > .cohesion', PARAMS.nbBoids);
+		});
 	});
 }());
