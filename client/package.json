@@ -17,12 +17,11 @@
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-mocha-test": "^0.12.7",
-    "karma": "^0.13.3",
+    "karma": "^0.12.31",
     "karma-commonjs": "0.0.13",
     "karma-mocha": "^0.2.0",
-    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.1.4",
     "mocha": "^2.2.5",
-    "phantomjs": "^1.9.17",
     "selenium-webdriver": "^2.46.1"
   },
   "dependencies": {

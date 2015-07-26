@@ -11,7 +11,7 @@
             executable: phantomjsPath,
             arguments: [
                 '--webdriver=8185',
-                '--webdriver-logfile=/tmp/phantomjs.log'
+                '--webdriver-logfile=build/phantomjs.log'
             ],
             readyPattern: /running on port [0-9]+/
         };
