@@ -62,5 +62,32 @@
 				done();
 			});
 		});
+		
+		it('at start, start-stop button has the possible action name as text', function (done) {
+			task.possibleActions().take(1).subscribe(function (actions) {
+				domContext.assertText('[data-ui=btn-start-stop]', actions[0].name);
+				done();
+			});
+		});
+		
+		it('after clicking on it, start-stop button has the possible action name as text', function (done) {
+			task.possibleActions().skip(1).take(1).subscribe(function (actions) {
+				domContext.assertText('[data-ui=btn-start-stop]', actions[0].name);
+				domContext.assertOneOf('.simulation-flow-button');
+				done();
+			});
+			
+			domContext.clickOn('[data-ui=btn-start-stop]');
+		});
+		
+		it('clicking on the button to start the simulation fires an event in the underlying task',
+			function (done) {
+			task.simulationActive().subscribe(function (active) {
+				expect(active).to.be(true);
+				done();
+			});
+			
+			domContext.clickOn('[data-ui=btn-start-stop]');
+		});
 	});
 }());

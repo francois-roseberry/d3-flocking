@@ -18,10 +18,21 @@
 		this._editSimulationParamsTask = EditSimulationParamsTask.start(params);
 		this._model = SimulationModel.newModel(params, size);
 		
-		Rx.Observable.timer(0, 20)
-			.takeUntil(this._stopped)
-			.withLatestFrom(this._editSimulationParamsTask .params(), paramsOnly)
-			.subscribe(update(this._model));
+		var self = this;
+		this._editSimulationParamsTask.simulationActive()
+			.filter(function (active) { return active; })
+			.subscribe(function() {
+				var stopped = self._stopped.merge(
+					self._editSimulationParamsTask.simulationActive()
+						.filter(function (active) {
+							return !active;
+						}));
+				
+				Rx.Observable.timer(0, 20)
+					.takeUntil(stopped)
+					.withLatestFrom(self._editSimulationParamsTask.params(), paramsOnly)
+					.subscribe(update(self._model));
+			});
 	}
 	
 	function paramsOnly(time, params) {
@@ -43,7 +54,7 @@
 		return this._editSimulationParamsTask;
 	};
 	
-	RunSimulationTask.prototype.model = function() {
+	RunSimulationTask.prototype.model = function () {
 		return this._model;
 	};
 }());

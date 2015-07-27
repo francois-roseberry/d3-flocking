@@ -19,9 +19,14 @@
 		});
 	};
 	
-	function renderParamControls(container, editSimulationParamsTask, params) {
+	function renderParamControls(container, task, params) {
+		renderWeightsControls(container, task, params);
+		renderSimulationFlowControls(container, task);
+	}
+	
+	function renderWeightsControls(container, editSimulationParamsTask, params) {
 		var weightsBox = container.append('div')
-		.classed('controls-box', true);
+			.classed('controls-box', true);
 			
 		weightsBox.append('span').text('Weights');
 		
@@ -57,6 +62,33 @@
 					change: onSliderChange(editSimulationParamsTask, param.id)
 				});
 			});
+	}
+	
+	function renderSimulationFlowControls(container, task) {
+		var flowBox = container.append('div')
+			.classed('controls-box', true);
+			
+		task.possibleActions().subscribe(function (actions) {
+			renderSimulationFlowActions(task, flowBox, actions);
+		});
+	}
+	
+	function renderSimulationFlowActions(task, flowBox, actions) {
+		var buttons = flowBox.selectAll('.simulation-flow-button')
+			.data(actions);
+				
+		buttons.enter()
+			.append('button')
+			.classed('simulation-flow-button', true)
+			.attr('data-ui', 'btn-start-stop');
+			
+		buttons
+			.text(function (action) { return action.name; })
+			.on('click', function (action) {
+				task[action.fn]();
+			});
+			
+		buttons.exit().remove();
 	}
 	
 	function onSliderChange (editSimulationParamsTask, name) {

@@ -10,11 +10,21 @@
 	};
 	
 	function EditSimulationParamsTask(params) {
-		this._paramsSubject= new Rx.BehaviorSubject(params);
+		this._paramsSubject = new Rx.BehaviorSubject(params);
+		this._active = new Rx.ReplaySubject(1);
+		this._possibleActions = new Rx.BehaviorSubject([{name: 'Start', fn: 'startSimulation'}]);
 	}
 	
 	EditSimulationParamsTask.prototype.params = function () {
 		return this._paramsSubject.asObservable();
+	};
+	
+	EditSimulationParamsTask.prototype.simulationActive = function () {
+		return this._active.asObservable();
+	};
+	
+	EditSimulationParamsTask.prototype.possibleActions = function () {
+		return this._possibleActions.asObservable();
 	};
 	
 	EditSimulationParamsTask.prototype.setWeight = function (name, value) {
@@ -26,5 +36,15 @@
 			params.weights[name] = value;
 			self._paramsSubject.onNext(params);
 		});
+	};
+	
+	EditSimulationParamsTask.prototype.startSimulation = function () {
+		this._active.onNext(true);
+		this._possibleActions.onNext([{name: 'Stop', fn: 'stopSimulation'}]);
+	};
+	
+	EditSimulationParamsTask.prototype.stopSimulation = function () {
+		this._active.onNext(false);
+	this._possibleActions.onNext([{name: 'Start', fn: 'startSimulation'}]);
 	};
 }());
