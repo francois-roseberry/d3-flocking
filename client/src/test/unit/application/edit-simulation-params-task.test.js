@@ -15,7 +15,7 @@
 		
 		it('fires an event at start with the possible actions', function (done) {
 			task.possibleActions().subscribe(function (actions) {
-				expect(actions).to.eql([{name: 'Start', fn: 'startSimulation'}]);
+				expect(actions).to.eql([EditSimulationParamsTask.actions.start()]);
 				done();
 			});
 		});
@@ -54,7 +54,16 @@
 			task.startSimulation();
 			
 			task.possibleActions().subscribe(function (actions) {
-				expect(actions).to.eql([{name: 'Stop', fn: 'stopSimulation'}]);
+				expect(actions).to.eql([EditSimulationParamsTask.actions.stop()]);
+				done();
+			});
+		});
+		
+		it('fires an event about the possible actions after simulation is stopped', function (done) {
+			task.stopSimulation();
+			
+			task.possibleActions().subscribe(function (actions) {
+				expect(actions).to.eql([EditSimulationParamsTask.actions.start()]);
 				done();
 			});
 		});

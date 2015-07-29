@@ -20,8 +20,8 @@
 	};
 	
 	function renderParamControls(container, task, params) {
-		renderWeightsControls(container, task, params);
 		renderSimulationFlowControls(container, task);
+		renderWeightsControls(container, task, params);
 	}
 	
 	function renderWeightsControls(container, editSimulationParamsTask, params) {
@@ -79,10 +79,10 @@
 				
 		buttons.enter()
 			.append('button')
-			.classed('simulation-flow-button', true)
-			.attr('data-ui', 'btn-start-stop');
+			.classed('simulation-flow-button', true);
 			
 		buttons
+			.attr('data-ui', function (action) { return 'btn-action-' + action.id; })
 			.text(function (action) { return action.name; })
 			.on('click', function (action) {
 				task[action.fn]();

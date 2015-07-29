@@ -63,21 +63,21 @@
 			});
 		});
 		
-		it('at start, start-stop button has the possible action name as text', function (done) {
+		it('at start, start button has the possible action name as text', function (done) {
 			task.possibleActions().take(1).subscribe(function (actions) {
-				domContext.assertText('[data-ui=btn-start-stop]', actions[0].name);
+				domContext.assertText('[data-ui=btn-action-' + actions[0].id + ']', actions[0].name);
 				done();
 			});
 		});
 		
-		it('after clicking on it, start-stop button has the possible action name as text', function (done) {
+		it('after clicking on it, stop button has the possible action name as text', function (done) {
 			task.possibleActions().skip(1).take(1).subscribe(function (actions) {
-				domContext.assertText('[data-ui=btn-start-stop]', actions[0].name);
+				domContext.assertText('[data-ui=btn-action-' + actions[0].id + ']', actions[0].name);
 				domContext.assertOneOf('.simulation-flow-button');
 				done();
 			});
 			
-			domContext.clickOn('[data-ui=btn-start-stop]');
+			domContext.clickOn('[data-ui=btn-action-start]');
 		});
 		
 		it('clicking on the button to start the simulation fires an event in the underlying task',
@@ -87,7 +87,7 @@
 				done();
 			});
 			
-			domContext.clickOn('[data-ui=btn-start-stop]');
+			domContext.clickOn('[data-ui=btn-action-start]');
 		});
 	});
 }());
