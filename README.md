@@ -14,5 +14,3 @@ Bash should be installed, since you just pulled the sources from GitHub. But be 
 path (installation option in 'Git for Windows' installer)
 
 This setup is not tested on non-Windows systems and therefore I don't know if this works.
-
-TODO : add integration (DOM) tests
