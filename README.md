@@ -1,4 +1,4 @@
-# flocking-js
+# flocking-js [Completed]
 Implementation of flocking particles with D3
 
 To setup the project after downloading the sources, install node.js, 
