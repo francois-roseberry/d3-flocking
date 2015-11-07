@@ -13,4 +13,4 @@ Note: grunt runs karma on windows using git bash, so it must be in the path. Log
 Bash should be installed, since you just pulled the sources from GitHub. But be sure to put Git Bash in the
 path (installation option in 'Git for Windows' installer)
 
-This setup is not tested on non-Windows systems and therefore I don't know if this works.
+This setup is not tested on systems other than Windows Vista and 7 and therefore I don't know if this works on non-Windows systems.
